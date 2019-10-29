@@ -1,182 +1,154 @@
-const frogGraphics = () =>{
-let frog = [];
-for(let i = 0; i < 2; i++){
-  frog[i] = "@@";   
-    for(let j = 1; j < 2; j++){
-    frog[j] = "||";
-  }
-}
-let result = frog.join("\n");
+let chalk = require('chalk');
 
-return result;
+//FROG
+const frogGraphics = () =>{
+result = '@'
+return chalk.green.bgHex('#193300').bold(result);
 };
 console.log(frogGraphics() + ' ===>  Breki');
-
-//WOODS 7
-const woods7 = () => {
-  let wood = [];
-
-  for(let i = 0; i < 2; i++){
-    wood[i] = " ______________";   
-      for(let j = 1; j < 2; j++){
-      wood[j] = "(______________)";
-    }
-  }
-  let result = wood.join("\n");
-  
-  return result;
-};
-console.log(woods7() + ' woods 7');
-
-//WOODS 10
-const woods10 = () => {
-  let wood = [];
-
-  for(let i = 0; i < 2; i++){
-    wood[i] = " __________";   
-      for(let j = 1; j < 2; j++){
-      wood[j] = "(__________)";
-    }
-  }
-  let result = wood.join("\n");
-  
-  return result;
-};
-console.log(woods10() + ' woods 5');
 
 //WOODS 3
 const woods3 = () => {
   let wood = [];
-
-  for(let i = 0; i < 2; i++){
-    wood[i] = " ______";   
-      for(let j = 1; j < 2; j++){
-      wood[j] = "(______)";
-    }
+  for (let i = 0; i < 3 ; i++){
+    wood.push('w');
   }
-  let result = wood.join("\n");
-  
-  return result;
+  let res = wood.join("");
+  return chalk.rgb(205,133,63).bgHex('#FFE5CC').bold(res);
 };
-console.log(woods3() + ' woods 3');
-
+console.log(woods3() + ' woods3');
 console.log();
+
+//WOODS 5
+const woods5 = () => {
+  let wood = [];
+  for (let i = 0; i < 5 ; i++){
+    wood.push('w');
+  }
+  let res = wood.join("");
+
+  return chalk.rgb(205,133,63).bgHex('#FFE5CC').bold(res);
+};
+console.log(woods5() + ' woods3');
+console.log();
+
 
 //TURTLE 3
 const turtle3 = () => {
   let  turtle = [];
-
-  for(let i = 0; i < 2; i++){
-    turtle[i] = "¤¤¤¤¤¤";   
-      for(let j = 1; j < 2; j++){
-      turtle[j] = "******";
+  for (let i = 0; i < 3 ; i++){
+    if(turtle[1] === 't'){
+    turtle.push('o');
+    } else{
+    turtle.push('t');
     }
   }
-  let result = turtle.join("\n");
-  
-  return result;
+  let res = turtle.join("");
+  return chalk.black.bgWhite.bold(res);
 };
-console.log(turtle3() + ' turtle 3');
-
+console.log(turtle3() + ' turtle3 balról jobbra');
 console.log();
 
-//TURTLE 2
-const turtle2 = () => {
+
+const turtle3R = () => {
+    let  turtle = [];
+    for (let i = 0; i < 3 ; i++){
+      if(turtle[0] !== 'o'){
+      turtle.push('o');
+      } else{
+      turtle.push('t');
+      }
+    }
+    let res = turtle.join("");
+    return chalk.black.bgWhite.bold(res);
+  };
+  console.log(turtle3R() + ' turtle3 jobbról balra');
+  console.log();
+
+//TURTLE4
+const turtle4 = () => {
   let  turtle = [];
-
-  for(let i = 0; i < 2; i++){
-    turtle[i] = "¤¤¤¤";   
-      for(let j = 1; j < 2; j++){
-      turtle[j] = "¤¤¤¤";
+  for (let i = 0; i < 4 ; i++){
+    if(turtle[2] === 't'){
+    turtle.push('o');
+    } else{
+    turtle.push('t');
     }
   }
-  let result = turtle.join("\n");
-  
-  return result;
+  let res = turtle.join("");
+  return chalk.black.bgWhite.bold(res);
 };
-console.log(turtle2() + ' turtle 2');
+console.log(turtle4() + ' turtle4  balról jobbra');
 console.log();
+
+const turtle4R = () => {
+  let  turtle = [];
+  for (let i = 0; i < 4 ; i++){
+    if(turtle[0] !== 'o'){
+    turtle.push('o');
+    } else{
+    turtle.push('t');
+    }
+  }
+  let res = turtle.join("");
+  return chalk.black.bgWhite.bold(res);
+};
+console.log(turtle4R() + ' turtle4  balról jobbra');
+console.log();
+
 
 //CAR 1
 const car1 = () => {
   let  car = [];
-
-  for(let i = 0; i < 2; i++){
-    car[i] = "1111";   
-      for(let j = 1; j < 2; j++){
-        car[j] = "1111";
-    }
+  for (let i = 0; i < 1 ; i++){
+  car.push('<');
+  car.push('>');
   }
-  let result = car.join("\n");
-  
-  return result;
+  let res = car.join("");
+  return chalk.yellow.bgBlue.bold(res);
 };
-console.log(car1() + ' car 1');
+console.log(car1() + ' Car1 ');
 console.log();
 
 //CAR 2
 const car2 = () => {
   let  car = [];
-
-  for(let i = 0; i < 2; i++){
-    car[i] = "2222";   
-      for(let j = 1; j < 2; j++){
-        car[j] = "2222";
-    }
+  for (let i = 0; i < 1 ; i++){
+  car.push('<');
+  car.push('>');
   }
-  let result = car.join("\n");
-  
-  return result;
+  car.push('>');
+  let res = car.join("");
+  return chalk.yellow.bgBlue.bold(res);
 };
-console.log(car2() + ' car 2');
+console.log(car2() + ' Car2 balról jobbra ');
 console.log();
-//CAR 3
-const car3 = () => {
+
+//CAR 2 REVERSE
+const car2R = () => {
   let  car = [];
-
-  for(let i = 0; i < 2; i++){
-    car[i] = "3333";   
-      for(let j = 1; j < 2; j++){
-        car[j] = "3333";
-    }
-  }
-  let result = car.join("\n");
+  for (let i = 0; i < 2 ; i++){
+  car.push('<');
   
-  return result;
+  }
+  car.push('>');
+  let res = car.join("");
+  return chalk.yellow.bgBlue.bold(res);
 };
-console.log(car3() + ' car 3');
+console.log(car2R() + ' Car2 jobbról balra ');
 console.log();
 
-//CAR 4
-const car4 = () => {
-  let  car = [];
-
-  for(let i = 0; i < 2; i++){
-    car[i] = "4444";   
-      for(let j = 1; j < 2; j++){
-        car[j] = "4444";
-    }
-  }
-  let result = car.join("\n");
-  
-  return result;
+module.exports = {
+  frogGraphics: frogGraphics,
+  woods3: woods3,
+  woods5: woods5,
+  turtle3: turtle3,
+  turtle3R: turtle3R,
+  turtle4: turtle4,
+  turtle4R: turtle4R,
+  car1: car1,
+  car2: car2,
+  car2R: car2R
 };
-console.log(car4() + ' car 4');
 
-console.log();
 
-//TRUCK 3
-const truck3 = () => {
-  let  truck = [];
-
-  for(let i = 0; i < 2; i++){
-    truck[i] = "TTTTTT";   
-      for(let j = 1; j < 2; j++){
-        truck[j] = "TTTTTT";
-    }
-  }
-  let result = truck.join("\n");
-  
-  return result;
-};
-console.log(truck3() + ' TRUCK 3');
