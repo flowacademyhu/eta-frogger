@@ -1,3 +1,5 @@
+let table = require('table');
+
 const matrixGenerator = (row, col, filler) => {
   const matrix = [];
   for (var i = 0; i < row; i++) {
@@ -11,17 +13,15 @@ const matrixGenerator = (row, col, filler) => {
 
 const map = matrixGenerator(14, 25, 0);
 
-//A megadott mátrixban adott sor és oszlopkordináton elhelyezi a békát. 
 const frogMatrixStarter = (matrix, row, col) => {
   const matr = matrix.slice();
-  matr[row][col] = '@';
+  matr[row][col] = 1;
   return matr;
 };
 
 const x = frogMatrixStarter(map, 13, 12);
-console.log(x);
+console.log(table.table(x));
 
-//Erre a függvényre azért van szükség mert a következő frogMove függvény a billenytyű parancsoknál az adott objektum sor és oszlopelemeit módosítja.
 const frogCoordinator = (row, col) => {
   const cord = {
     row: row,
@@ -30,9 +30,63 @@ const frogCoordinator = (row, col) => {
   return cord;
 };
 
-let cord = frogCoordinator(13, 12);
+const cord = frogCoordinator(13, 12);
 
-//A frogMove bekéri billenytűket a felhasználótól és modsítja a béka helyét a mátrixban. 
+const frogLeft = () => {
+  map[cord.row][cord.col] = 0;
+  map[cord.row][--cord.col] = 1;
+  console.clear();
+  console.log(table.table(map));
+};
+
+const frogRight = () => {
+  map[cord.row][cord.col] = 0;
+  map[cord.row][++cord.col] = 1;
+  console.clear();
+  console.log(table.table(map));
+};
+
+const frogUp = () => {
+  map[cord.row][cord.col] = 0;
+  map[--cord.row][cord.col] = 1;
+  console.clear();
+  console.log(table.table(map));
+};
+
+const frogDown = () => {
+  map[cord.row][cord.col] = 0;
+  map[++cord.row][cord.col] = 1;
+  console.clear();
+  console.log(table.table(map));
+};
+
+const finishLine = () => {
+if (
+(cord.row == 2 && cord.col == 6) ||
+(cord.row == 2 && cord.col == 10) || 
+(cord.row == 2 && cord.col == 14) ||
+(cord.row == 2 && cord.col == 18)) {
+return true;
+}
+};
+
+const westBorder = () => {
+  if (cord.col > 4) return true;
+};
+
+const eastBorder = () => {
+  if (cord.col < 20) return true;
+};
+
+const southBorder = () => {
+  if (cord.row < 13) return true;
+};
+
+const northBorder = () => {
+  if (cord.row > 2) return true;
+};
+
+// A frogMove bekéri billenytűket a felhasználótól és modsítja a béka helyét a mátrixban.
 const frogMove = () => {
   const stdin = process.stdin;
   stdin.setRawMode(true);
@@ -40,29 +94,17 @@ const frogMove = () => {
   stdin.setEncoding('utf8');
   stdin.on('data', keyboardFn);
   function keyboardFn (key) {
-    if (key === 'a' && cord.col > 4) {
-      map[cord.row][cord.col] = 0;
-      map[cord.row][--cord.col] = 5;
-      console.clear();
-      console.log(map);
+    if (key === 'a' && westBorder()) {
+      frogLeft();
     }
-    if (key === 'd' && cord.col < 20) {
-      map[cord.row][cord.col] = 0;
-      map[cord.row][++cord.col] = 5;
-      console.clear();
-      console.log(map);
+    if (key === 'd' && eastBorder()) {
+      frogRight();
     }
-    if (key === 'w' && cord.row > 2) {
-      map[cord.row][cord.col] = 0;
-      map[--cord.row][cord.col] = 5;
-      console.clear();
-      console.log(map);
+    if (key === 'w' && (northBorder() || finishLine())) {
+      frogUp();
     }
-    if (key === 's' && cord.row < 13) {
-      map[cord.row][cord.col] = 0;
-      map[++cord.row][cord.col] = 5;
-      console.clear();
-      console.log(map);
+    if (key === 's' && southBorder()) {
+      frogDown();
     }
     if (key === 'q') {
       process.exit();
@@ -75,5 +117,15 @@ frogMove();
 module.exports = {
   frogMatrixStarter: frogMatrixStarter,
   frogCoordinator: frogCoordinator,
-  frogMove: frogMove
+  frogMove: frogMove,
+  frogUp: frogUp,
+  frogDown: frogDown,
+  frogLeft: frogLeft,
+  frogRight: frogRight,
+  northBorder: northBorder,
+  southBorder: southBorder,
+  eastBorder: eastBorder,
+  westBorder: westBorder,
+  finishLine: finishLine
 };
+
