@@ -19,6 +19,8 @@
   "dependencies": {
     "axel": "0.0.3",
     "chalk": "^2.4.2",
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "file-system": "^2.2.2",
+    "fs": "0.0.1-security"
   }
 }
