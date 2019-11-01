@@ -1,7 +1,7 @@
 let readLine = require('readline-sync');
 let term = require('terminal-kit').terminal;
-
-const mainMenu = () => {
+term.clear();
+const menuFrog = () => {
   console.log('    ___  ___   __    __   __  ___  ___');  
   console.log('   (  _)(  ,) /  \\  / _) / _)(  _)(  ,)'); 
   console.log('   ) _) )   \\( () )( (/\\( (/\\ ) _) )  \\'); 
@@ -16,15 +16,20 @@ const mainMenu = () => {
   console.log('           ww ooooo----ooooo ww ');
 };
 
-mainMenu();
+menuFrog();
 const menuArray = ['START', 'BEST SCORES', 'INSTRUCTIONS', 'ESCAPE'];
 const menuOptions = {
   y: 20,
+  extraLines: 2,
+  cancelable: true
 };
 
-term.singleColumnMenu(menuArray, menuOptions);
-// const menuFunctions = {
-//   response.selectedIndex
-// };
-
-// term.singleColumnMenu(menuArray, menuOptions, menuFunctions);
+term.singleColumnMenu(menuArray, menuOptions, function(error, response) {
+  canceled: true,
+  term( '\n' ).eraseLineAfter.green(
+		"#%s selected: %s \n" ,
+		response.selectedIndex ,
+		response.selectedText ,
+	) ;
+	process.exit() ;
+} ) ;
