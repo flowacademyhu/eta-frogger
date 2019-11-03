@@ -19,6 +19,7 @@
   "dependencies": {
     "axel": "0.0.3",
     "chalk": "^2.4.2",
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "terminal-kit": "^1.31.4"
   }
 }
