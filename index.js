@@ -171,6 +171,30 @@ const layer = (matr) => {
   }
   return character;
 };
+const check = (matr) => {
+  for (let row = 1; row < matr.length; row++) {
+    for (let col = 4; col < matr[row].length; col++) {
+  if(matr[row][col] === 0 && row === cord.row && col === cord.col){
+    //halál
+  }    
+  if ((matr[row][col] === 9 && row === cord.row && col === cord.col) ||
+      (matr[row][col] === 7 && row === cord.row && col === cord.col) ||
+      (matr[row][col] === 6 && row === cord.row && col === cord.col) ||
+      (matr[row][col] === 5 && row === cord.row && col === cord.col)) {
+       console.log('halál');
+  }
+
+  if ((matr[row][col] === 4 && row === cord.row && col === cord.col) ||
+      (matr[row][col] === 3 && row === cord.row && col === cord.col) ||
+      (matr[row][col] === 2 && row === cord.row && col === cord.col)) {
+      console.log('élet');
+  }
+ 
+  
+    }   
+  }
+};
+ 
 
 let tick = 4;
 // move(map[1], car1, -1);
@@ -195,7 +219,9 @@ setInterval(() => {
   move(map[18], car3, 1, tick);
 
   console.log(layer(map));
+  check(map);
   tick += 1;
+  
 }, 300);
 
 frogMove();
