@@ -2,11 +2,8 @@ let table = require('table');
 let term = require('terminal-kit').terminal;
 let ctx = require('axel');
 let colors = require('colors');
-<<<<<<< HEAD
-=======
 let readLine = require('readline-sync');
 let chalk = require('chalk');
->>>>>>> 35c8a7b0e5914144c69da41aa3633c4b89b2d0a0
 
 const matrixGenerator = (row, col, filler) => {
   let matrix = [];
@@ -185,23 +182,11 @@ const layer = (matr) => {
       } else if (matr[row][col] === 5) {
         character += chalk.yellow.bgGreen.bold('¤');
       } else if (matr[row][col] === 4) {
-<<<<<<< HEAD
-        character += 'w'.black.bgGray;
-=======
         character += chalk.rgb(205,133,63).bgHex('#FFE5CC').bold('W');
->>>>>>> 35c8a7b0e5914144c69da41aa3633c4b89b2d0a0
       } else if (matr[row][col] === 3) {
-<<<<<<< HEAD
         character += chalk.hex('#20620B').bgWhite.bold('O');
       } else if (matr[row][col] === 2) {
         character += chalk.hex('#20620B').bgWhite.bold('O');
-=======
-        character += 'w'.black.bgGray;
-      } else if (matr[row][col] === 2) {
-        character += 'o'.black.bgGray;
-      } else if (matr[row][col] === 8) {
-        character += 'o'.black.bgGray;
->>>>>>> c38771d41570a498b16fa3b0b36dcde342b92286
       }
     }
     character += '\n';
@@ -212,18 +197,9 @@ const layer = (matr) => {
 const check = (matr) => {
   for (let row = 1; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-      if(matr[row][col] === 0 && row === cord.row && col === cord.col){
-
-      }    
-=======
-      if (matr[row][col] === 0 && row === cord.row && col === cord.col) {
+      if(matr[row][col] === 0 && row === cord.row && col === cord.col) {
       // halal
       }
->>>>>>> c38771d41570a498b16fa3b0b36dcde342b92286
->>>>>>> 35c8a7b0e5914144c69da41aa3633c4b89b2d0a0
       if (
         (matr[row][col] === 'F' && row === cord.row && col === cord.col ) ||
         (matr[row][col] === 'L' && row === cord.row && col === cord.col ) ||
@@ -233,39 +209,24 @@ const check = (matr) => {
         (matr[row][col] === 6 && row === cord.row && col === cord.col) ||
         (matr[row][col] === 5 && row === cord.row && col === cord.col)) {
         console.log('halál');
-<<<<<<< HEAD
         process.exit();
       }
       if (matr[row][col] === 0 && row === cord.row && col === cord.col && row < 9) {
-=======
-   
         console.log('You are dead! New game? Y/N'); 
         const key = readLine.keyInYNStrict();
-        if(key === 'y'){
-        
-        
+        /* if(key === 'y'){
         } else {
           console.clear();
-
         }
-        
-                
-        
+         */   
       }
-<<<<<<< HEAD
-      if ((matr[row][col] === 4 && row === cord.row && col === cord.col) ||
+      if((matr[row][col] === 4 && row === cord.row && col === cord.col) ||
       (matr[row][col] === 3 && row === cord.row && col === cord.col) ||
       (matr[row][col] === 2 && row === cord.row && col === cord.col)) {
-        console.log('élet');
-        
+      console.log('élet');  
       }
-    }
-}
-return 'halal';
-=======
+    
       if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
->>>>>>> 35c8a7b0e5914144c69da41aa3633c4b89b2d0a0
-        // halal
         console.log('HALÁL1');
         process.exit();
       }  
@@ -284,14 +245,13 @@ return 'halal';
       if (matr[row][col] === 8 && row === cord.row && col === cord.col) {
         console.log('ÉLET');
         cord.col += 1;
-      }
+      } 
     }
   }
->>>>>>> c38771d41570a498b16fa3b0b36dcde342b92286
 };
 
 let tick = 4;
-main();
+
 check(map);
 
 setInterval(() => {
@@ -318,8 +278,6 @@ setInterval(() => {
   check(map);
   tick += 1;
 }, 300);
-<<<<<<< HEAD
-=======
 
 main();
 
@@ -329,4 +287,3 @@ main();
 //le egyet az életből.
 // contains a sor a bekát tartalmazza és ha benne van akkor move eseteben pussholunk vagy unshiftnél.
 
->>>>>>> 35c8a7b0e5914144c69da41aa3633c4b89b2d0a0
