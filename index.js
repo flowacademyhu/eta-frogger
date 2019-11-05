@@ -2,7 +2,8 @@ let table = require('table');
 let term = require('terminal-kit').terminal;
 let ctx = require('axel');
 let colors = require('colors');
-
+let readLine = require('readline-sync');
+let chalk = require('chalk');
 
 const matrixGenerator = (row, col, filler) => {
   let matrix = [];
@@ -154,7 +155,7 @@ const layer = (matr) => {
   for (let row = 0; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
       if (row === cord.row && col === cord.col && matr[row][col] !== 'F' && matr[row][col] !== 'L' && matr[row][col] !== 'O' && matr[row][col] !== 'W' ) {
-        character += '@'.green.bgGray;
+        character += chalk.hex('#20620B').bgBlack.bold('@');
       } else if (row === cord.row && col === cord.col && matr[row][col] === 'F') {
         character += 'F'.green.bgGray;
       } else if (row === cord.row && col === cord.col && matr[row][col] === 'L') {
@@ -174,19 +175,25 @@ const layer = (matr) => {
       } else if (matr[row][col] === 'W') {
         character += 'W'.yellow.bgGray; 
       } else if (matr[row][col] === 7) {
-        character += 'c'.red.bgGray;
+        character += chalk.yellow.bgRed.bold('¤');
       } else if (matr[row][col] === 6) {
-        character += 'c'.red.bgGray; 
+        character += chalk.yellow.bgBlue.bold('¤');
       } else if (matr[row][col] === 5) {
-        character += 'c'.red.bgGray; 
+        character += chalk.yellow.bgGreen.bold('¤');
       } else if (matr[row][col] === 4) {
-        character += 'w'.black.bgGray; 
+        character += chalk.rgb(205,133,63).bgHex('#FFE5CC').bold('W');
       } else if (matr[row][col] === 3) {
+<<<<<<< HEAD
+        character += chalk.hex('#20620B').bgWhite.bold('O');
+      } else if (matr[row][col] === 2) {
+        character += chalk.hex('#20620B').bgWhite.bold('O');
+=======
         character += 'w'.black.bgGray;
       } else if (matr[row][col] === 2) {
         character += 'o'.black.bgGray;
       } else if (matr[row][col] === 8) {
         character += 'o'.black.bgGray;
+>>>>>>> c38771d41570a498b16fa3b0b36dcde342b92286
       }
     }
     character += '\n';
@@ -197,9 +204,15 @@ const layer = (matr) => {
 const check = (matr) => {
   for (let row = 1; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
+<<<<<<< HEAD
+      if(matr[row][col] === 0 && row === cord.row && col === cord.col){
+
+      }    
+=======
       if (matr[row][col] === 0 && row === cord.row && col === cord.col) {
       // halal
       }
+>>>>>>> c38771d41570a498b16fa3b0b36dcde342b92286
       if (
         (matr[row][col] === 'F' && row === cord.row && col === cord.col ) ||
         (matr[row][col] === 'L' && row === cord.row && col === cord.col ) ||
@@ -210,7 +223,31 @@ const check = (matr) => {
         (matr[row][col] === 5 && row === cord.row && col === cord.col)) {
         process.exit();
         console.log('halál');
+   
+        console.log('You are dead! New game? Y/N'); 
+        const key = readLine.keyInYNStrict();
+        if(key === 'y'){
+        
+        
+        } else {
+          console.clear();
+
+        }
+        
+                
+        
       }
+<<<<<<< HEAD
+      if ((matr[row][col] === 4 && row === cord.row && col === cord.col) ||
+      (matr[row][col] === 3 && row === cord.row && col === cord.col) ||
+      (matr[row][col] === 2 && row === cord.row && col === cord.col)) {
+        console.log('élet');
+        
+      }
+    }
+}
+return 'halal';
+=======
       if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
         // halal
         console.log('ÉLET');
@@ -232,6 +269,7 @@ const check = (matr) => {
       }
     }
   }
+>>>>>>> c38771d41570a498b16fa3b0b36dcde342b92286
 };
 
 let tick = 4;
@@ -261,3 +299,10 @@ setInterval(() => {
 }, 300);
 
 main();
+
+//move tick
+//move helyett a seitntervalba, tickbe minden sornak egy és if bele hogy maradékosan osztható e.
+// ha 500ms megy akkor minden 2ik alkalommal veygen le egyet a 60s ből és a végén pedig ha elfogy akkor hivjuk meg a halál függvényt vagy vonjon 
+//le egyet az életből.
+// contains a sor a bekát tartalmazza és ha benne van akkor move eseteben pussholunk vagy unshiftnél.
+
