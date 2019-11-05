@@ -1,9 +1,9 @@
-let readLine = require('readline-sync');
 let term = require('terminal-kit').terminal;
+const termMenu = require('terminal-menu');
 term.clear();
 
 const menuTitle = () => {
-  term.blue();
+  term.red();
   console.log('    ___  ___   __    __   __  ___  ___');  
   console.log('   (  _)(  ,) /  \\  / _) / _)(  _)(  ,)'); 
   console.log('   ) _) )   \\( () )( (/\\( (/\\ ) _) )  \\'); 
@@ -24,19 +24,36 @@ const menuFrog = () => {
 };
 menuTitle();
 menuFrog();
-term.blue();
-const menuArray = ['START', 'BEST SCORES', 'INSTRUCTIONS', 'ESCAPE'];
-const menuOptions = {
-  y: 20,
-  extraLines: 2,
-  cancelable: true
-};
 
-term.singleColumnMenu(menuArray, menuOptions, function(error, response) {
-  canceled: true,
-  term( '\n' ).eraseLineAfter.green(
-		response.selectedIndex ,
-		response.selectedText ,
-  ) ;
-	process.exit() ;
-} ) ;
+const menu = termMenu({
+  width: 12,
+  x: 14,
+  y: 18,
+  fg: 'yellow',
+  bg: 'black'
+});
+
+menu.write('MAIN MENU')
+menu.add('START');
+menu.add('BEST SCORES');
+menu.add('INSTRUCTIONS');
+menu.add('EXIT');
+
+menu.on('select', function (label) {
+  if (label === ('START')) {
+    console.log('START');
+  } else if (label === ('BEST SCORES')) {
+    console.log('best scores');
+  } else if (label === ('INSTRUCTIONS')) {
+    console.log('Instructions');
+  } else if (label === ('EXIT')) {
+    process.exit();
+  }
+});
+process.stdin.pipe(menu.createStream()).pipe(process.stdout);
+
+process.stdin.setRawMode(true);
+menu.on('close', function () {
+  process.stdin.setRawMode(false);
+  process.stdin.end();
+});
