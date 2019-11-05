@@ -120,6 +120,7 @@ const car3 = [5, 5];
 const treeLog1 = [4, 4, 4, 4, 4];
 const treeLog2 = [3, 3, 3];
 const treeLog3 = [2, 2];
+const treeLog8 = [8, 8, 8];
 
 // út
 
@@ -182,9 +183,17 @@ const layer = (matr) => {
       } else if (matr[row][col] === 4) {
         character += chalk.rgb(205,133,63).bgHex('#FFE5CC').bold('W');
       } else if (matr[row][col] === 3) {
+<<<<<<< HEAD
         character += chalk.hex('#20620B').bgWhite.bold('O');
       } else if (matr[row][col] === 2) {
         character += chalk.hex('#20620B').bgWhite.bold('O');
+=======
+        character += 'w'.black.bgGray;
+      } else if (matr[row][col] === 2) {
+        character += 'o'.black.bgGray;
+      } else if (matr[row][col] === 8) {
+        character += 'o'.black.bgGray;
+>>>>>>> c38771d41570a498b16fa3b0b36dcde342b92286
       }
     }
     character += '\n';
@@ -195,17 +204,24 @@ const layer = (matr) => {
 const check = (matr) => {
   for (let row = 1; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
+<<<<<<< HEAD
       if(matr[row][col] === 0 && row === cord.row && col === cord.col){
 
       }    
+=======
+      if (matr[row][col] === 0 && row === cord.row && col === cord.col) {
+      // halal
+      }
+>>>>>>> c38771d41570a498b16fa3b0b36dcde342b92286
       if (
-      (matr[row][col] === 'F' && row === cord.row && col === cord.col ) ||
-      (matr[row][col] === 'L' && row === cord.row && col === cord.col ) ||
-      (matr[row][col] === 'O' && row === cord.row && col === cord.col ) ||
-      (matr[row][col] === 'W' && row === cord.row && col === cord.col ) ||
-      (matr[row][col] === 7 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 6 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 5 && row === cord.row && col === cord.col)) {
+        (matr[row][col] === 'F' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 'L' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 'O' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 'W' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 7 && row === cord.row && col === cord.col) ||
+        (matr[row][col] === 6 && row === cord.row && col === cord.col) ||
+        (matr[row][col] === 5 && row === cord.row && col === cord.col)) {
+        process.exit();
         console.log('halál');
    
         console.log('You are dead! New game? Y/N'); 
@@ -221,6 +237,7 @@ const check = (matr) => {
                 
         
       }
+<<<<<<< HEAD
       if ((matr[row][col] === 4 && row === cord.row && col === cord.col) ||
       (matr[row][col] === 3 && row === cord.row && col === cord.col) ||
       (matr[row][col] === 2 && row === cord.row && col === cord.col)) {
@@ -230,18 +247,41 @@ const check = (matr) => {
     }
 }
 return 'halal';
+=======
+      if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
+        // halal
+        console.log('ÉLET');
+        cord.col += 1;
+      }
+      if (matr[row][col] === 3 && row === cord.row && col === cord.col) {
+        // halal
+        console.log('ÉLET');
+        cord.col -= 1;
+      }
+      if (matr[row][col] === 2 && row === cord.row && col === cord.col) {
+      // halal
+        cord.col -= 1;
+      }
+      if (matr[row][col] === 8 && row === cord.row && col === cord.col) {
+        // halal
+        console.log('ÉLET');
+        cord.col += 1;
+      }
+    }
+  }
+>>>>>>> c38771d41570a498b16fa3b0b36dcde342b92286
 };
 
 let tick = 4;
 
 setInterval(() => {
   console.clear();
-  move(map[1], treeLog3, -1, tick);
-  move(map[2], treeLog2, 1, tick);
-  move(map[3], treeLog3, -1, tick);
+  move(map[1], treeLog2, -1, tick);
+  move(map[2], treeLog1, 1, tick);
+  move(map[3], treeLog2, -1, tick);
   move(map[4], treeLog1, 1, tick);
-  move(map[5], treeLog3, -1, tick);
-  move(map[6], treeLog2, 1, tick);
+  move(map[5], treeLog2, -1, tick);
+  move(map[6], treeLog8, 1, tick);
   move(map[7], treeLog3, -1, tick);
   move(map[8], treeLog3, -1, tick);
 
@@ -265,3 +305,4 @@ main();
 // ha 500ms megy akkor minden 2ik alkalommal veygen le egyet a 60s ből és a végén pedig ha elfogy akkor hivjuk meg a halál függvényt vagy vonjon 
 //le egyet az életből.
 // contains a sor a bekát tartalmazza és ha benne van akkor move eseteben pussholunk vagy unshiftnél.
+
