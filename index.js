@@ -123,8 +123,8 @@ const treeLog8 = [8, 8, 8];
 const move = (array, vehicle, direction, newTick) => {
   if (direction > 0) {
     if (newTick % 8 === 0) {
-      array.pop();
-      array.unshift(0);
+     array.pop();
+     array.unshift(0);
       for (let i = 0; i < vehicle.length; i++) {
         array[i] = vehicle[i];
       }
@@ -136,8 +136,8 @@ const move = (array, vehicle, direction, newTick) => {
 
   if (direction < 0) {
     if (newTick % 8 === 0) {
-      array.shift();
-      array.push(0);
+     array.shift();
+     array.push(0);
       for (let i = vehicle.length; i > 0; i--) {
         array[array.length - 1] = vehicle[vehicle.length - 1];
         array[array.length - 2] = vehicle[vehicle.length - 2];
@@ -166,7 +166,7 @@ const layer = (matr) => {
       } else if (row === cord.row && col === cord.col && matr[row][col] === 'W') {
         character += 'W'.green.bgGray;
       } else if (matr[row][col] === 0) {
-        character += ' '.bgGray;
+        character += ' '.bgGrey;
       } else if (matr[row][col] === 'F') {
         character += 'F'.yellow.bgGray;
       } else if (matr[row][col] === 'L') {
@@ -212,13 +212,13 @@ const check = (matr) => {
         process.exit();
       }
       if (matr[row][col] === 0 && row === cord.row && col === cord.col && row < 9) {
-        console.log('You are dead! New game? Y/N'); 
+        console.log('You are dead! New game?'); 
         const key = readLine.keyInYNStrict();
-        /* if(key === 'y'){
+         if(key === 'y'){
         } else {
           console.clear();
         }
-         */   
+           
       }
       if((matr[row][col] === 4 && row === cord.row && col === cord.col) ||
       (matr[row][col] === 3 && row === cord.row && col === cord.col) ||
@@ -256,10 +256,9 @@ check(map);
 
 setInterval(() => {
   console.clear();
-  move(map[1], treeLog2, -1, tick);
   move(map[2], treeLog1, 1, tick);
   move(map[3], treeLog2, -1, tick);
-  move(map[4], treeLog8, 1, tick);
+  move(map[4], treeLog1, 1, tick);
   move(map[5], treeLog2, -1, tick);
   move(map[6], treeLog1, 1, tick);
   move(map[7], treeLog2, -1, tick);
@@ -268,16 +267,16 @@ setInterval(() => {
   move(map[10], car1, 1, tick);
   move(map[11], car2, -1, tick);
   move(map[12], car2, -1, tick);
-  move(map[13], car2, 1, tick);
+  move(map[13], car3, 1, tick);
   move(map[14], car2, -1, tick);
   move(map[15], car2, 1, tick);
-  move(map[16], car3, -1, tick);
+  move(map[16], car2, -1, tick);
   move(map[17], car3, 1, tick);
-
+  
   console.log(layer(map));
   check(map);
   tick += 1;
-}, 300);
+}, 200);
 
 main();
 
