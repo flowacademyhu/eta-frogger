@@ -1,8 +1,6 @@
 let table = require('table');
 let term = require('terminal-kit').terminal;
 let ctx = require('axel');
-let time = require('./time.js');
-let menu = require('./time.js');
 let colors = require('colors');
 
 
@@ -121,6 +119,7 @@ const car3 = [5, 5];
 const treeLog1 = [4, 4, 4, 4, 4];
 const treeLog2 = [3, 3, 3];
 const treeLog3 = [2, 2];
+const treeLog8 = [8, 8, 8];
 
 // út
 
@@ -183,8 +182,10 @@ const layer = (matr) => {
       } else if (matr[row][col] === 4) {
         character += 'w'.black.bgGray; 
       } else if (matr[row][col] === 3) {
-        character += 'o'.black.bgGray;
+        character += 'w'.black.bgGray;
       } else if (matr[row][col] === 2) {
+        character += 'o'.black.bgGray;
+      } else if (matr[row][col] === 8) {
         character += 'o'.black.bgGray;
       }
     }
@@ -196,40 +197,53 @@ const layer = (matr) => {
 const check = (matr) => {
   for (let row = 1; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
-      if(matr[row][col] === 0 && row === cord.row && col === cord.col){
-      }    
+      if (matr[row][col] === 0 && row === cord.row && col === cord.col) {
+      // halal
+      }
       if (
-      (matr[row][col] === 'F' && row === cord.row && col === cord.col ) ||
-      (matr[row][col] === 'L' && row === cord.row && col === cord.col ) ||
-      (matr[row][col] === 'O' && row === cord.row && col === cord.col ) ||
-      (matr[row][col] === 'W' && row === cord.row && col === cord.col ) ||
-      (matr[row][col] === 7 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 6 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 5 && row === cord.row && col === cord.col)) {
+        (matr[row][col] === 'F' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 'L' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 'O' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 'W' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 7 && row === cord.row && col === cord.col) ||
+        (matr[row][col] === 6 && row === cord.row && col === cord.col) ||
+        (matr[row][col] === 5 && row === cord.row && col === cord.col)) {
+        process.exit();
         console.log('halál');
       }
-      if ((matr[row][col] === 4 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 3 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 2 && row === cord.row && col === cord.col)) {
-        console.log('élet');
+      if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
+        // halal
+        console.log('ÉLET');
+        cord.col += 1;
+      }
+      if (matr[row][col] === 3 && row === cord.row && col === cord.col) {
+        // halal
+        console.log('ÉLET');
+        cord.col -= 1;
+      }
+      if (matr[row][col] === 2 && row === cord.row && col === cord.col) {
+      // halal
+        cord.col -= 1;
+      }
+      if (matr[row][col] === 8 && row === cord.row && col === cord.col) {
+        // halal
+        console.log('ÉLET');
+        cord.col += 1;
       }
     }
-}
+  }
 };
-
-
-check(map);  
 
 let tick = 4;
 
 setInterval(() => {
   console.clear();
-  move(map[1], treeLog3, -1, tick);
-  move(map[2], treeLog2, 1, tick);
-  move(map[3], treeLog3, -1, tick);
+  move(map[1], treeLog2, -1, tick);
+  move(map[2], treeLog1, 1, tick);
+  move(map[3], treeLog2, -1, tick);
   move(map[4], treeLog1, 1, tick);
-  move(map[5], treeLog3, -1, tick);
-  move(map[6], treeLog2, 1, tick);
+  move(map[5], treeLog2, -1, tick);
+  move(map[6], treeLog8, 1, tick);
   move(map[7], treeLog3, -1, tick);
   move(map[8], treeLog3, -1, tick);
 
@@ -241,14 +255,9 @@ setInterval(() => {
   move(map[15], car3, 1, tick);
   move(map[16], car3, -1, tick);
   move(map[17], car3, 1, tick);
-
-  console.log(layer(map));
   check(map);
+  console.log(layer(map));
   tick += 1;
 }, 300);
 
 main();
-
-
-
-setInterval(time.timeLeft, 1000);
