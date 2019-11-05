@@ -3,7 +3,6 @@ let term = require('terminal-kit').terminal;
 let ctx = require('axel');
 let colors = require('colors');
 
-
 const matrixGenerator = (row, col, filler) => {
   let matrix = [];
   for (let i = 0; i < row; i++) {
@@ -23,7 +22,6 @@ const frogMatrixStarter = (matrix, row, col) => {
   return matr;
 };
 
-
 const frogCoordinator = (row, col) => {
   const cord = {
     row: row,
@@ -41,7 +39,6 @@ const finishMaker = (matrix) => {
 };
 
 map = finishMaker(map);
-
 const cord = frogCoordinator(18, 20);
 
 const frogLeft = () => {
@@ -117,15 +114,15 @@ const car3 = [5, 5];
 
 // fa
 const treeLog1 = [4, 4, 4, 4, 4];
-const treeLog2 = [3, 3, 3];
-const treeLog3 = [2, 2];
+const treeLog2 = [2, 2, 2];
+const treeLog3 = [3, 3];
 const treeLog8 = [8, 8, 8];
-
-// út
 
 const move = (array, vehicle, direction, newTick) => {
   if (direction > 0) {
     if (newTick % 8 === 0) {
+      array.pop();
+      array.unshift(0);
       for (let i = 0; i < vehicle.length; i++) {
         array[i] = vehicle[i];
       }
@@ -137,9 +134,12 @@ const move = (array, vehicle, direction, newTick) => {
 
   if (direction < 0) {
     if (newTick % 8 === 0) {
+      array.shift();
+      array.push(0);
       for (let i = vehicle.length; i > 0; i--) {
         array[array.length - 1] = vehicle[vehicle.length - 1];
         array[array.length - 2] = vehicle[vehicle.length - 2];
+        array[array.length - 3] = vehicle[vehicle.length - 3];
       }
     } else {
       array.shift();
@@ -180,7 +180,7 @@ const layer = (matr) => {
       } else if (matr[row][col] === 5) {
         character += 'c'.red.bgGray; 
       } else if (matr[row][col] === 4) {
-        character += 'w'.black.bgGray; 
+        character += 'w'.black.bgGray;
       } else if (matr[row][col] === 3) {
         character += 'w'.black.bgGray;
       } else if (matr[row][col] === 2) {
@@ -197,9 +197,6 @@ const layer = (matr) => {
 const check = (matr) => {
   for (let row = 1; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
-      if (matr[row][col] === 0 && row === cord.row && col === cord.col) {
-      // halal
-      }
       if (
         (matr[row][col] === 'F' && row === cord.row && col === cord.col ) ||
         (matr[row][col] === 'L' && row === cord.row && col === cord.col ) ||
@@ -208,25 +205,27 @@ const check = (matr) => {
         (matr[row][col] === 7 && row === cord.row && col === cord.col) ||
         (matr[row][col] === 6 && row === cord.row && col === cord.col) ||
         (matr[row][col] === 5 && row === cord.row && col === cord.col)) {
-        process.exit();
         console.log('halál');
+        process.exit();
       }
-      if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
+      if (matr[row][col] === 0 && row === cord.row && col === cord.col && row < 9) {
         // halal
+        console.log('HALÁL1');
+        process.exit();
+      }  
+      if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
         console.log('ÉLET');
-        cord.col += 1;
+        cord.col = cord.col + 1;
       }
       if (matr[row][col] === 3 && row === cord.row && col === cord.col) {
-        // halal
         console.log('ÉLET');
         cord.col -= 1;
       }
       if (matr[row][col] === 2 && row === cord.row && col === cord.col) {
-      // halal
+        console.log('ÉLET');
         cord.col -= 1;
       }
       if (matr[row][col] === 8 && row === cord.row && col === cord.col) {
-        // halal
         console.log('ÉLET');
         cord.col += 1;
       }
@@ -235,29 +234,30 @@ const check = (matr) => {
 };
 
 let tick = 4;
+main();
+check(map);
 
 setInterval(() => {
   console.clear();
   move(map[1], treeLog2, -1, tick);
   move(map[2], treeLog1, 1, tick);
   move(map[3], treeLog2, -1, tick);
-  move(map[4], treeLog1, 1, tick);
+  move(map[4], treeLog8, 1, tick);
   move(map[5], treeLog2, -1, tick);
-  move(map[6], treeLog8, 1, tick);
-  move(map[7], treeLog3, -1, tick);
-  move(map[8], treeLog3, -1, tick);
+  move(map[6], treeLog1, 1, tick);
+  move(map[7], treeLog2, -1, tick);
+  move(map[8], treeLog2, -1, tick);
 
   move(map[10], car1, 1, tick);
   move(map[11], car2, -1, tick);
   move(map[12], car2, -1, tick);
   move(map[13], car2, 1, tick);
   move(map[14], car2, -1, tick);
-  move(map[15], car3, 1, tick);
+  move(map[15], car2, 1, tick);
   move(map[16], car3, -1, tick);
   move(map[17], car3, 1, tick);
-  check(map);
+
   console.log(layer(map));
+  check(map);
   tick += 1;
 }, 300);
-
-main();
