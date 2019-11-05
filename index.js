@@ -212,7 +212,7 @@ const check = (matr) => {
         process.exit();
       }
       if (matr[row][col] === 0 && row === cord.row && col === cord.col && row < 9) {
-        console.log('You are dead! New game?'); 
+        console.log('You are dead! New game? Y/N'); 
         const key = readLine.keyInYNStrict();
          if(key === 'y'){
         } else {
@@ -226,7 +226,7 @@ const check = (matr) => {
       console.log('élet');  
       }
     
-      if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
+      if (matr[row][col] === 4 && row === cord.row && col === cord.col && row < 9) {
         console.log('HALÁL1');
         process.exit();
       }  
@@ -251,11 +251,10 @@ const check = (matr) => {
 };
 
 let tick = 4;
-
 check(map);
-
 setInterval(() => {
   console.clear();
+  move(map[1], treeLog2, -1, tick);
   move(map[2], treeLog1, 1, tick);
   move(map[3], treeLog2, -1, tick);
   move(map[4], treeLog1, 1, tick);
