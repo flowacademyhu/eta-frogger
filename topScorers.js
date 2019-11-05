@@ -12,7 +12,7 @@ const jsonBoard = JSON.stringify(leaderBoard);
 
 const save = () => {
 // Path néven majd változtatni kell!!!!!
-  fs.writeFile('/home/vajgi90/Flow/Frogger/eta-frogger/eta-frogger/result.json', jsonBoard, (err) => {
+  fs.writeFile('./result.json', jsonBoard, (err) => {
     if (err) {
       console.error(err);
       return;
@@ -21,42 +21,44 @@ const save = () => {
   });
 };
 
-const fileLoader = () => {
-  //Path néven változtatni!!!!
-  const result = fs.readFileSync('/home/vajgi90/Flow/Frogger/eta-frogger/eta-frogger/result.json', 'utf8');
-};
-
-const topR = JSON.parse(result);
-
-const topRacers = (object) => {
-  let first = 0;
-  let second = 0;
-  let third = 0;
-  let firstRacer;
-  let secondRacer;
-  let thirdRacer;
-  for (const x in object) {
-    if (object[x] > first) {
-      third = second;
-      second = first;
-      first = object[x];
-      firstRacer = x;
-    } else if (object[x] > second) {
-      third = second;
-      second = object[x];
-      secondRacer = x;
-    } else if (object[x] > third) {
-      third = object[x];
-      thirdRacer = x;
-    }
+const statGen = () => {
+  const fileLoader = () => {
+    const result = fs.readFileSync('./result.json', 'utf8');
+    return result;
   }
-  console.log(`${firstRacer} : ${first} \n ${secondRacer} : ${second} \n ${thirdRacer} : ${third}`);
+
+  fileLoader();
+
+  const topR = JSON.parse(result);
+
+  const topRacers = (object) => {
+    let first = 0;
+    let second = 0;
+    let third = 0;
+    let firstRacer;
+    let secondRacer;
+    let thirdRacer;
+    for (const x in object) {
+      if (object[x] > first) {
+        third = second;
+        second = first;
+        first = object[x];
+        firstRacer = x;
+      } else if (object[x] > second) {
+        third = second;
+        second = object[x];
+        secondRacer = x;
+      } else if (object[x] > third) {
+        third = object[x];
+        thirdRacer = x;
+      }
+    }
+    console.log(`${firstRacer} : ${first} \n ${secondRacer} : ${second} \n ${thirdRacer} : ${third}`);
+  };
+  topRacers(topR);
 };
 
-topRacers(topR);
-
-module.export = {
-  topRacers: topRacers,
+module.exports = {
   save: save,
-  fileLoader: fileLoader
+  statGen: statGen
 };
