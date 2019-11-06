@@ -11,7 +11,10 @@ const leaderBoard = {
 const jsonBoard = JSON.stringify(leaderBoard);
 
 const save = () => {
+<<<<<<< HEAD
 // Path néven majd változtatni kell!!!!!
+=======
+>>>>>>> e0700dd8a932f683dc2ba44ac9cb86ace793c285
   fs.writeFile('./result.json', jsonBoard, (err) => {
     if (err) {
       console.error(err);
@@ -22,6 +25,7 @@ const save = () => {
 };
 
 const statGen = () => {
+<<<<<<< HEAD
   const fileLoader = () => {
     const result = fs.readFileSync('./result.json', 'utf8');
     return result;
@@ -52,6 +56,29 @@ const statGen = () => {
         third = object[x];
         thirdRacer = x;
       }
+=======
+  const result = fs.readFileSync('./result.json', 'utf8');
+  const topR = JSON.parse(result);
+  let first = 0;
+  let second = 0;
+  let third = 0;
+  let firstRacer;
+  let secondRacer;
+  let thirdRacer;
+  for (let x in topR) {
+    if (topR[x] > first) {
+      third = second;
+      second = first;
+      first = topR[x];
+      firstRacer = x;
+    } else if (topR[x] > second) {
+      third = second;
+      second = topR[x];
+      secondRacer = x;
+    } else if (topR[x] > third) {
+      third = topR[x];
+      thirdRacer = x;
+>>>>>>> e0700dd8a932f683dc2ba44ac9cb86ace793c285
     }
     console.log(`${firstRacer} : ${first} \n ${secondRacer} : ${second} \n ${thirdRacer} : ${third}`);
   };
