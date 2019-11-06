@@ -92,8 +92,8 @@ const layer = (matr, obj) => {
         character += chalk.yellow.bgGreen.bold('¤');
       } else if (matr[row][col] === 4) {
         character += chalk.rgb(205, 133, 63).bgHex('#FFE5CC').bold('W');
-      } else if (matr[row][col] === 3) {
-        character += chalk.hex('#20620B').bgWhite.bold('O');
+      } else if (matr[row][col] === 8) {
+        character += chalk.rgb(205, 133, 63).bgHex('#FFE5CC').bold('W');
       } else if (matr[row][col] === 2) {
         character += chalk.hex('#20620B').bgWhite.bold('O');
       }
@@ -131,7 +131,7 @@ const move = (array, vehicle, direction, newTick, spacing) => {
   return array;
 };
 
-const check = (matr, obj) => {
+const check = (matr, obj, time) => {
   for (let row = 1; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
       if (matr[row][col] === 0 && row === obj.row && col === obj.col && row < 9) {
@@ -152,15 +152,17 @@ const check = (matr, obj) => {
         obj.col += 1;
         break;
       }
-      if (matr[row][col] === 3 && row === obj.row && col === obj.col) {
-        obj.col -= 1;
-        break;
+      if (time === 0) {
+        console.clear();
+        console.log('Time is up');
+        process.exit();
       }
       if (matr[row][col] === 2 && row === obj.row && col === obj.col) {
         obj.col -= 1;
+        break;
       }
       if (matr[row][col] === 8 && row === obj.row && col === obj.col) {
-        obj.col += 1;
+        obj.col -= 1;
         break;
       }
     }

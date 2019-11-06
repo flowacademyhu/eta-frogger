@@ -34,7 +34,7 @@ const main = () => {
       console.log(field.layer(map, cord));
     }
     if (key === 's' && field.southBorder(cord)) {
-      field.frogDown();
+      field.frogDown(cord);
       console.clear();
       console.log(field.layer(map, cord));
     }
@@ -51,22 +51,38 @@ const car3 = [5, 5];
 
 const treeLog1 = [4, 4, 4, 4, 4];
 const treeLog2 = [2, 2, 2];
-const treeLog3 = [3, 3];
+const treeLog3 = [8, 8, 8, 8, 8];
 
 let tick = 4;
 
 main();
 
+let timeTick = 0;
+let timeStartAt = 30;
+
+const timer = (tick) => {
+  if (tick % 5 === 0) {
+    console.log(timeStartAt);
+    timeStartAt--;
+  }
+  if (timeStartAt < 1) {
+    setTimeout(() => {
+      console.clear();
+      console.log('Time is up!');
+    }, 1000);
+  }
+};
+
 setInterval(() => {
   console.clear();
-  field.move(map[1], treeLog2, -1, tick, 8);
+  field.move(map[1], treeLog3, -1, tick, 8);
   field.move(map[2], treeLog1, 1, tick, 20);
   field.move(map[3], treeLog2, -1, tick, 10);
-  field.move(map[4], treeLog1, -1, tick, 20);
+  field.move(map[4], treeLog3, -1, tick, 20);
   field.move(map[5], treeLog2, -1, tick, 4);
   field.move(map[6], treeLog1, 1, tick, 20);
   field.move(map[7], treeLog2, -1, tick, 8);
-  field.move(map[8], treeLog2, -1, tick, 8);
+  field.move(map[8], treeLog1, 1, tick, 8);
   field.move(map[10], car1, 1, tick, 8);
   field.move(map[11], car2, -1, tick, 8);
   field.move(map[12], car2, -1, tick, 8);
@@ -76,6 +92,8 @@ setInterval(() => {
   field.move(map[16], car2, -1, tick, 8);
   field.move(map[17], car3, 1, tick, 8);
   console.log(field.layer(map, cord));
-  field.check(map, cord);
+  field.check(map, cord, timeStartAt);
+  timer(timeTick);
+  timeTick += 1;
   tick += 1;
 }, 200);
