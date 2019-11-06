@@ -201,38 +201,38 @@ const check = (matr) => {
         process.exit();
       }
       if (matr[row][col] === 0 && row === cord.row && col === cord.col && row < 9) {
-        console.log('You are dead! New game? Y/N'); 
-        const key = readLine.keyInYNStrict();
-         if(key === 'y'){
-        } else {
-          console.clear();
-        }
+        console.log(cord.row, cord.col);
+        cord.col += 1;
+        break;
+      }
       if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
-        console.log('ÉLET');
-        cord.col = cord.col + 1;
+        console.log(cord.row, cord.col);
+        cord.col += 1;
         break;
       }
       if (matr[row][col] === 3 && row === cord.row && col === cord.col) {
-        console.log('ÉLET');
+        console.log(cord.row, cord.col);
         cord.col -= 1;
         break;
       }
       if (matr[row][col] === 2 && row === cord.row && col === cord.col) {
-        console.log('ÉLET');
+        console.log(cord.row, cord.col);
         cord.col -= 1;
         break;
       }
       if (matr[row][col] === 8 && row === cord.row && col === cord.col) {
-        console.log('ÉLET');
+        console.log(cord.row, cord.col);
         cord.col += 1;
         break;
-      } 
+      }
     }
   }
 };
 
 let tick = 4;
 check(map);
+
+main();
 setInterval(() => {
   console.clear();
   move(map[1], treeLog2, -1, tick);
@@ -252,17 +252,8 @@ setInterval(() => {
   move(map[15], car2, 1, tick);
   move(map[16], car2, -1, tick);
   move(map[17], car3, 1, tick);
-  
+
   console.log(layer(map));
   check(map);
   tick += 1;
 }, 200);
-
-main();
-
-//move tick
-//move helyett a seitntervalba, tickbe minden sornak egy és if bele hogy maradékosan osztható e.
-// ha 500ms megy akkor minden 2ik alkalommal veygen le egyet a 60s ből és a végén pedig ha elfogy akkor hivjuk meg a halál függvényt vagy vonjon 
-//le egyet az életből.
-// contains a sor a bekát tartalmazza és ha benne van akkor move eseteben pussholunk vagy unshiftnél.
-
