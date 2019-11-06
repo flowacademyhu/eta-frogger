@@ -18,12 +18,6 @@ const matrixGenerator = (row, col, filler) => {
 
 let map = matrixGenerator(20, 41, 0);
 
-const frogMatrixStarter = (matrix, row, col) => {
-  const matr = matrix.slice();
-  matr[row][col] = 1;
-  return matr;
-};
-
 const frogCoordinator = (row, col) => {
   const cord = {
     row: row,
@@ -114,11 +108,9 @@ const car1 = [7, 7, 7];
 const car2 = [6, 6, 6];
 const car3 = [5, 5];
 
-// fa
 const treeLog1 = [4, 4, 4, 4, 4];
 const treeLog2 = [2, 2, 2];
 const treeLog3 = [3, 3];
-const treeLog8 = [8, 8, 8];
 
 const move = (array, vehicle, direction, newTick) => {
   if (direction > 0) {
@@ -197,9 +189,6 @@ const layer = (matr) => {
 const check = (matr) => {
   for (let row = 1; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
-      if(matr[row][col] === 0 && row === cord.row && col === cord.col) {
-      // halal
-      }
       if (
         (matr[row][col] === 'F' && row === cord.row && col === cord.col ) ||
         (matr[row][col] === 'L' && row === cord.row && col === cord.col ) ||
@@ -218,33 +207,25 @@ const check = (matr) => {
         } else {
           console.clear();
         }
-           
-      }
-      if((matr[row][col] === 4 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 3 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 2 && row === cord.row && col === cord.col)) {
-      console.log('élet');  
-      }
-    
-      if (matr[row][col] === 4 && row === cord.row && col === cord.col && row < 9) {
-        console.log('HALÁL1');
-        process.exit();
-      }  
       if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
         console.log('ÉLET');
         cord.col = cord.col + 1;
+        break;
       }
       if (matr[row][col] === 3 && row === cord.row && col === cord.col) {
         console.log('ÉLET');
         cord.col -= 1;
+        break;
       }
       if (matr[row][col] === 2 && row === cord.row && col === cord.col) {
         console.log('ÉLET');
         cord.col -= 1;
+        break;
       }
       if (matr[row][col] === 8 && row === cord.row && col === cord.col) {
         console.log('ÉLET');
         cord.col += 1;
+        break;
       } 
     }
   }
