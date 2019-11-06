@@ -131,17 +131,32 @@ const move = (array, vehicle, direction, newTick, spacing) => {
   return array;
 };
 
+const finishChecker = (obj, point, fc, lc, oc, wc) => {
+  if (obj.row === 0 && obj.col === 9) {
+    point += 50;
+    fc = false;
+    console.log(point);
+  } else if (obj.row === 0 && obj.col === 17) {
+    point += 50;
+    lc = false;
+    console.log(point);
+  } else if (obj.row === 0 && obj.col === 25) {
+    point += 50;
+    oc = false;
+    console.log(point);
+  } else if (obj.row === 0 && obj.col === 33) {
+    point += 50;
+    wc = false;
+    console.log(point);
+  }
+};
+
 const check = (matr, obj, time) => {
   for (let row = 1; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
       if (matr[row][col] === 0 && row === obj.row && col === obj.col && row < 9) {
-        process.exit();
       }
       if (
-        (matr[row][col] === 'F' && row === obj.row && col === obj.col) ||
-        (matr[row][col] === 'L' && row === obj.row && col === obj.col) ||
-        (matr[row][col] === 'O' && row === obj.row && col === obj.col) ||
-        (matr[row][col] === 'W' && row === obj.row && col === obj.col) ||
         (matr[row][col] === 7 && row === obj.row && col === obj.col) ||
         (matr[row][col] === 6 && row === obj.row && col === obj.col) ||
         (matr[row][col] === 5 && row === obj.row && col === obj.col)) {
@@ -183,5 +198,6 @@ module.exports = {
   southBorder: southBorder,
   layer: layer,
   move: move,
-  check: check
+  check: check,
+  finishChecker: finishChecker
 };

@@ -11,13 +11,14 @@ map = field.finishMaker(map);
 const cord = field.frogCoordinator(18, 20);
 
 
+
 const main = () => {
   const stdin = process.stdin;
   stdin.setRawMode(true);
   stdin.resume();
   stdin.setEncoding('utf8');
   stdin.on('data', keyboardFn);
-  function keyboardFn (key) {
+  function keyboardFn(key) {
     if (key === 'a' && field.westBorder(cord)) {
       field.frogLeft(cord);
       console.clear();
@@ -57,6 +58,13 @@ let tick = 4;
 
 main();
 
+let life = 4;
+let point = 0;
+let fCheck = true;
+let lCheck = true;
+let oCheck = true;
+let wCheck = true;
+
 let timeTick = 0;
 let timeStartAt = 30;
 
@@ -65,12 +73,7 @@ const timer = (tick) => {
     console.log(timeStartAt);
     timeStartAt--;
   }
-  if (timeStartAt < 1) {
-    setTimeout(() => {
-      console.clear();
-      console.log('Time is up!');
-    }, 1000);
-  }
+  return timeStartAt;
 };
 
 setInterval(() => {
@@ -94,6 +97,7 @@ setInterval(() => {
   console.log(field.layer(map, cord));
   field.check(map, cord, timeStartAt);
   timer(timeTick);
+  field.finishChecker(cord, point, fCheck, lCheck, oCheck, wCheck);
   timeTick += 1;
   tick += 1;
 }, 200);
