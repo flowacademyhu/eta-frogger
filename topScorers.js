@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const leaderBoard = {
+let leaderBoard = {
   Klaudia: 39,
   Isti: 17,
   Peti: 15,
@@ -21,8 +21,8 @@ const save = () => {
 };
 
 const statGen = () => {
-  const result = fs.readFileSync('./result.json', 'utf8');
-  const topR = JSON.parse(result);
+  let result = fs.readFileSync('./result.json', 'utf8');
+  let topR = JSON.parse(result);
   let first = 0;
   let second = 0;
   let third = 0;
