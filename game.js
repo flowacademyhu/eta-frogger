@@ -29,7 +29,6 @@ const game = () => {
   let resultJson = fs.readFileSync('result.json');
   let result = JSON.parse(resultJson);
 
-
   const main = () => {
     const stdin = process.stdin;
     stdin.setRawMode(true);
@@ -40,22 +39,22 @@ const game = () => {
       if (key === 'a' && field.westBorder(cord)) {
         field.frogLeft(cord);
         console.clear();
-        console.log(field.layer(map, cord, fCheck, lCheck, oCheck, wCheck));
+        console.log(field.layer(map, cord, fCheck, lCheck, oCheck, wCheck, timeStartAt, points, life));
       }
       if (key === 'd' && field.eastBorder(cord)) {
         field.frogRight(cord);
         console.clear();
-        console.log(field.layer(map, cord, fCheck, lCheck, oCheck, wCheck));
+        console.log(field.layer(map, cord, fCheck, lCheck, oCheck, wCheck, timeStartAt, points, life));
       }
       if (key === 'w' && field.northBorder(cord, fCheck, lCheck, oCheck, wCheck)) {
         field.frogUp(cord);
         console.clear();
-        console.log(field.layer(map, cord, fCheck, lCheck, oCheck, wCheck));
+        console.log(field.layer(map, cord, fCheck, lCheck, oCheck, wCheck, timeStartAt, points, life));
       }
       if (key === 's' && field.southBorder(cord)) {
         field.frogDown(cord);
         console.clear();
-        console.log(field.layer(map, cord, fCheck, lCheck, oCheck, wCheck));
+        console.log(field.layer(map, cord, fCheck, lCheck, oCheck, wCheck, timeStartAt, points, life));
       }
       if (key === 'p') {
         result[userName] = points;
@@ -83,10 +82,20 @@ const game = () => {
     timeStartAt = 45;
   };
 
+  const reset2 = () => {
+    fCheck = true;
+    lCheck = true;
+    oCheck = true;
+    wCheck = true;
+    life = 4;
+    cord.row = 18;
+    cord.col = 20;
+    timeStartAt = 45;
+  };
+
   const finishChecker = (obj) => {
     if (!fCheck && !lCheck && !oCheck && !wCheck) {
-      reset();
-      game();
+      reset2();
     } else if (obj.row === 0 && obj.col === 8 && fCheck) {
       points += 50;
       fCheck = false;
@@ -150,8 +159,9 @@ const game = () => {
     if (tick % 5 === 0) {
       timeStartAt--;
     }
-    console.log(`${timeStartAt} second(s) left.`);
   };
+
+
 
   setInterval(() => {
     check(map, cord, timeStartAt);
@@ -175,15 +185,17 @@ const game = () => {
     field.move(map[16], car2, -1, tick, 18, 2);
     field.move(map[17], car3, 1, tick, 20, 2);
 
-    console.log(field.layer(map, cord, fCheck, lCheck, oCheck, wCheck));
+    console.log(field.layer(map, cord, fCheck, lCheck, oCheck, wCheck, timeStartAt, points, life));
     timer(timeTick);
-    console.log(`Life: ${life}`);
-    console.log(`Points: ${points}`);
+    field.arcadeTime(map, timeStartAt);
+    field.arcadePoints(map, points);
+    field.arcadeLife(map, life); 
     finishChecker(cord);
     timeTick += 1;
     tick += 1;
   }, 200);
 };
+
 module.exports = {
   game: game
 };
