@@ -1,5 +1,9 @@
 const chalk = require('chalk');
 const colors = require('colors');
+const readLine = require('readline');
+const test = require('./game.js');
+
+const cord = test.cord;
 
 const matrixGenerator = (row, col, filler) => {
   const matrix = [];
@@ -21,10 +25,10 @@ const frogCoordinator = (row, col) => {
 };
 
 const finishMaker = (matrix) => {
-  matrix[0][9] = 'F';
-  matrix[0][17] = 'L';
-  matrix[0][25] = 'O';
-  matrix[0][33] = 'W';
+  matrix[0][8] = 'F';
+  matrix[0][16] = 'L';
+  matrix[0][24] = 'O';
+  matrix[0][32] = 'W';
   return matrix;
 };
 
@@ -43,58 +47,46 @@ const frogDown = (obj) => {
 
 const westBorder = (obj) => {
   if (obj.col > 4) return true;
+  return false;
 };
 const eastBorder = (obj) => {
   if (obj.col < 36) return true;
+  return false;
 };
 const southBorder = (obj) => {
   if (obj.row < 19) return true;
 };
-const northBorder = (obj) => {
+const northBorder = (obj, f, l, o, w) => {
   if (obj.row > 1 ||
-  (obj.row === 1 && obj.col === 9) ||
-  (obj.row === 1 && obj.col === 17) ||
-  (obj.row === 1 && obj.col === 25) ||
-  (obj.row === 1 && obj.col === 33)) {
+  (obj.row === 1 && obj.col === 8 && f) ||
+  (obj.row === 1 && obj.col === 16 && l) ||
+  (obj.row === 1 && obj.col === 24 && o) ||
+  (obj.row === 1 && obj.col === 32 && w)) {
     return true;
   }
 };
 
-const layer = (matr, obj) => {
+const layer = (matr, obj, f, l, o, w) => {
   let character = '';
   for (let row = 0; row < matr.length; row++) {
-    for (let col = 4; col < matr[row].length; col++) {
-      if (row === obj.row && col === obj.col && matr[row][col] !== 'F' && matr[row][col] !== 'L' && matr[row][col] !== 'O' && matr[row][col] !== 'W') {
-        character += chalk.hex('#20620B').bgBlack.bold('@');
-      } else if (row === obj.row && col === obj.col && matr[row][col] === 'F') {
-        character += 'F'.green.bgGray;
-      } else if (row === obj.row && col === obj.col && matr[row][col] === 'L') {
-        character += 'L'.green.bgGray;
-      } else if (row === obj.row && col === obj.col && matr[row][col] === 'O') {
-        character += 'O'.green.bgGray;
-      } else if (row === obj.row && col === obj.col && matr[row][col] === 'W') {
-        character += 'W'.green.bgGray;
-      } else if (matr[row][col] === 0) {
-        character += ' '.bgGrey;
-      } else if (matr[row][col] === 'F') {
-        character += 'F'.yellow.bgGray;
-      } else if (matr[row][col] === 'L') {
-        character += 'L'.yellow.bgGray;
-      } else if (matr[row][col] === 'O') {
-        character += 'O'.yellow.bgGray;
-      } else if (matr[row][col] === 'W') {
-        character += 'W'.yellow.bgGray;
-      } else if (matr[row][col] === 7) {
-        character += chalk.yellow.bgRed.bold('¤');
-      } else if (matr[row][col] === 6) {
-        character += chalk.yellow.bgBlue.bold('¤');
-      } else if (matr[row][col] === 5) {
-        character += chalk.yellow.bgGreen.bold('¤');
-      } else if (matr[row][col] === 4) {
-        character += chalk.rgb(205, 133, 63).bgHex('#FFE5CC').bold('W');
-      } else if (matr[row][col] === 8) {
-        character += chalk.rgb(205, 133, 63).bgHex('#FFE5CC').bold('W');
-      } else if (matr[row][col] === 2) {
+    for (let col = 4; col < matr[row].length - 4; col++) {
+      if (row === obj.row && col === obj.col && matr[row][col] !== 'F' && matr[row][col] !== 'L' && matr[row][col] !== 'O' && matr[row][col] !== 'W') character += chalk.hex('#20620B').bgBlack.bold('@');
+      else if (matr[row][col] === 0 && row < 9) character += ' '.bgBlue;
+      else if (matr[row][col] === 0) character += ' '.bgGrey;
+      else if (matr[row][col] === 'F' && f) character += 'F'.yellow.bgBlack;
+      else if (matr[row][col] === 'L' && l) character += 'L'.yellow.bgBlack;
+      else if (matr[row][col] === 'O' && o) character += 'O'.yellow.bgBlack;
+      else if (matr[row][col] === 'W' && w) character += 'W'.yellow.bgBlack;
+      else if (matr[row][col] === 'F' && !f) character += 'F'.green.bgGray;
+      else if (matr[row][col] === 'L' && !l) character += 'L'.green.bgGray;
+      else if (matr[row][col] === 'O' && !o) character += 'O'.green.bgGray;
+      else if (matr[row][col] === 'W' && !w) character += 'W'.green.bgGray;
+      else if (matr[row][col] === 7) character += chalk.yellow.bgRed.bold('¤');
+      else if (matr[row][col] === 6) character += chalk.yellow.bgBlue.bold('¤');
+      else if (matr[row][col] === 5) character += chalk.yellow.bgGreen.bold('¤');
+      else if (matr[row][col] === 4) character += chalk.rgb(205, 133, 63).bgHex('#FFE5CC').bold('W');
+      else if (matr[row][col] === 8) character += chalk.rgb(205, 133, 63).bgHex('#FFE5CC').bold('W');
+      else if (matr[row][col] === 2) {
         character += chalk.hex('#20620B').bgWhite.bold('O');
       }
     }
@@ -103,9 +95,9 @@ const layer = (matr, obj) => {
   return character;
 };
 
-const move = (array, vehicle, direction, newTick, spacing) => {
-  if (direction > 0) {
-    if (newTick % spacing === 0) {
+const move = (array, vehicle, direction, newTick, spacing, speed) => {
+  if (direction > 0 && (newTick % speed === 0)) {
+    if ((newTick % spacing === 0)) {
       array.pop();
       array.unshift(0);
       for (let i = 0; i < vehicle.length; i++) {
@@ -116,8 +108,9 @@ const move = (array, vehicle, direction, newTick, spacing) => {
       array.pop();
     }
   }
-  if (direction < 0) {
-    if (newTick % spacing === 0) {
+
+  if (direction < 0 && (newTick % speed === 0)) {
+    if ((newTick % spacing === 0)) {
       array.shift();
       array.push(0);
       for (let i = vehicle.length; i > 0; i--) {
@@ -131,58 +124,7 @@ const move = (array, vehicle, direction, newTick, spacing) => {
   return array;
 };
 
-const finishChecker = (obj, point, fc, lc, oc, wc) => {
-  if (obj.row === 0 && obj.col === 9) {
-    point += 50;
-    fc = false;
-    console.log(point);
-  } else if (obj.row === 0 && obj.col === 17) {
-    point += 50;
-    lc = false;
-    console.log(point);
-  } else if (obj.row === 0 && obj.col === 25) {
-    point += 50;
-    oc = false;
-    console.log(point);
-  } else if (obj.row === 0 && obj.col === 33) {
-    point += 50;
-    wc = false;
-    console.log(point);
-  }
-};
 
-const check = (matr, obj, time) => {
-  for (let row = 1; row < matr.length; row++) {
-    for (let col = 4; col < matr[row].length; col++) {
-      if (matr[row][col] === 0 && row === obj.row && col === obj.col && row < 9) {
-      }
-      if (
-        (matr[row][col] === 7 && row === obj.row && col === obj.col) ||
-        (matr[row][col] === 6 && row === obj.row && col === obj.col) ||
-        (matr[row][col] === 5 && row === obj.row && col === obj.col)) {
-        console.log('halál');
-        process.exit();
-      }
-      if (matr[row][col] === 4 && row === obj.row && col === obj.col) {
-        obj.col += 1;
-        break;
-      }
-      if (time === 0) {
-        console.clear();
-        console.log('Time is up');
-        process.exit();
-      }
-      if (matr[row][col] === 2 && row === obj.row && col === obj.col) {
-        obj.col -= 1;
-        break;
-      }
-      if (matr[row][col] === 8 && row === obj.row && col === obj.col) {
-        obj.col -= 1;
-        break;
-      }
-    }
-  }
-};
 
 module.exports = {
   matrixGenerator: matrixGenerator,
@@ -197,7 +139,5 @@ module.exports = {
   northBorder: northBorder,
   southBorder: southBorder,
   layer: layer,
-  move: move,
-  check: check,
-  finishChecker: finishChecker
+  move: move
 };
