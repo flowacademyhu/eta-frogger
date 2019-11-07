@@ -18,6 +18,12 @@ const matrixGenerator = (row, col, filler) => {
 
 let map = matrixGenerator(20, 41, 0);
 
+const frogMatrixStarter = (matrix, row, col) => {
+  const matr = matrix.slice();
+  matr[row][col] = 1;
+  return matr;
+};
+
 const frogCoordinator = (row, col) => {
   const cord = {
     row: row,
@@ -111,12 +117,13 @@ const car3 = [5, 5];
 const treeLog1 = [4, 4, 4, 4, 4];
 const treeLog2 = [2, 2, 2];
 const treeLog3 = [3, 3];
+const treeLog8 = [8, 8, 8];
 
 const move = (array, vehicle, direction, newTick) => {
   if (direction > 0) {
     if (newTick % 8 === 0) {
-     array.pop();
-     array.unshift(0);
+      array.pop();
+      array.unshift(0);
       for (let i = 0; i < vehicle.length; i++) {
         array[i] = vehicle[i];
       }
@@ -128,8 +135,8 @@ const move = (array, vehicle, direction, newTick) => {
 
   if (direction < 0) {
     if (newTick % 8 === 0) {
-     array.shift();
-     array.push(0);
+      array.shift();
+      array.push(0);
       for (let i = vehicle.length; i > 0; i--) {
         array[array.length - 1] = vehicle[vehicle.length - 1];
         array[array.length - 2] = vehicle[vehicle.length - 2];
@@ -158,7 +165,7 @@ const layer = (matr) => {
       } else if (row === cord.row && col === cord.col && matr[row][col] === 'W') {
         character += 'W'.green.bgGray;
       } else if (matr[row][col] === 0) {
-        character += ' '.bgGrey;
+        character += ' '.bgGray;
       } else if (matr[row][col] === 'F') {
         character += 'F'.yellow.bgGray;
       } else if (matr[row][col] === 'L') {
@@ -189,6 +196,9 @@ const layer = (matr) => {
 const check = (matr) => {
   for (let row = 1; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
+      if(matr[row][col] === 0 && row === cord.row && col === cord.col) {
+      // halal
+      }
       if (
         (matr[row][col] === 'F' && row === cord.row && col === cord.col ) ||
         (matr[row][col] === 'L' && row === cord.row && col === cord.col ) ||
@@ -201,44 +211,54 @@ const check = (matr) => {
         process.exit();
       }
       if (matr[row][col] === 0 && row === cord.row && col === cord.col && row < 9) {
-        console.log(cord.row, cord.col);
-        cord.col += 1;
-        break;
+        console.log('You are dead! New game? Y/N'); 
+        const key = readLine.keyInYNStrict();
+        /* if(key === 'y'){
+        } else {
+          console.clear();
+        }
+         */   
       }
+      if((matr[row][col] === 4 && row === cord.row && col === cord.col) ||
+      (matr[row][col] === 3 && row === cord.row && col === cord.col) ||
+      (matr[row][col] === 2 && row === cord.row && col === cord.col)) {
+      console.log('élet');  
+      }
+    
       if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
-        console.log(cord.row, cord.col);
-        cord.col += 1;
-        break;
+        console.log('HALÁL1');
+        process.exit();
+      }  
+      if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
+        console.log('ÉLET');
+        cord.col = cord.col + 1;
       }
       if (matr[row][col] === 3 && row === cord.row && col === cord.col) {
-        console.log(cord.row, cord.col);
+        console.log('ÉLET');
         cord.col -= 1;
-        break;
       }
       if (matr[row][col] === 2 && row === cord.row && col === cord.col) {
-        console.log(cord.row, cord.col);
+        console.log('ÉLET');
         cord.col -= 1;
-        break;
       }
       if (matr[row][col] === 8 && row === cord.row && col === cord.col) {
-        console.log(cord.row, cord.col);
+        console.log('ÉLET');
         cord.col += 1;
-        break;
-      }
+      } 
     }
   }
 };
 
 let tick = 4;
+
 check(map);
 
-main();
 setInterval(() => {
   console.clear();
   move(map[1], treeLog2, -1, tick);
   move(map[2], treeLog1, 1, tick);
   move(map[3], treeLog2, -1, tick);
-  move(map[4], treeLog1, 1, tick);
+  move(map[4], treeLog8, 1, tick);
   move(map[5], treeLog2, -1, tick);
   move(map[6], treeLog1, 1, tick);
   move(map[7], treeLog2, -1, tick);
@@ -247,13 +267,22 @@ setInterval(() => {
   move(map[10], car1, 1, tick);
   move(map[11], car2, -1, tick);
   move(map[12], car2, -1, tick);
-  move(map[13], car3, 1, tick);
+  move(map[13], car2, 1, tick);
   move(map[14], car2, -1, tick);
   move(map[15], car2, 1, tick);
-  move(map[16], car2, -1, tick);
+  move(map[16], car3, -1, tick);
   move(map[17], car3, 1, tick);
 
   console.log(layer(map));
   check(map);
   tick += 1;
-}, 200);
+}, 300);
+
+main();
+
+//move tick
+//move helyett a seitntervalba, tickbe minden sornak egy és if bele hogy maradékosan osztható e.
+// ha 500ms megy akkor minden 2ik alkalommal veygen le egyet a 60s ből és a végén pedig ha elfogy akkor hivjuk meg a halál függvényt vagy vonjon 
+//le egyet az életből.
+// contains a sor a bekát tartalmazza és ha benne van akkor move eseteben pussholunk vagy unshiftnél.
+
