@@ -11,7 +11,6 @@ const leaderBoard = {
 const jsonBoard = JSON.stringify(leaderBoard);
 
 const save = () => {
-// Path néven majd változtatni kell!!!!!
   fs.writeFile('./result.json', jsonBoard, (err) => {
     if (err) {
       console.error(err);
@@ -22,36 +21,27 @@ const save = () => {
 };
 
 const statGen = () => {
-  const fileLoader = () => {
-    const result = fs.readFileSync('./result.json', 'utf8');
-    return result;
-  }
-
-  fileLoader();
-
+  const result = fs.readFileSync('./result.json', 'utf8');
   const topR = JSON.parse(result);
-
-  const topRacers = (object) => {
-    let first = 0;
-    let second = 0;
-    let third = 0;
-    let firstRacer;
-    let secondRacer;
-    let thirdRacer;
-    for (const x in object) {
-      if (object[x] > first) {
-        third = second;
-        second = first;
-        first = object[x];
-        firstRacer = x;
-      } else if (object[x] > second) {
-        third = second;
-        second = object[x];
-        secondRacer = x;
-      } else if (object[x] > third) {
-        third = object[x];
-        thirdRacer = x;
-      }
+  let first = 0;
+  let second = 0;
+  let third = 0;
+  let firstRacer;
+  let secondRacer;
+  let thirdRacer;
+  for (let x in topR) {
+    if (topR[x] > first) {
+      third = second;
+      second = first;
+      first = topR[x];
+      firstRacer = x;
+    } else if (topR[x] > second) {
+      third = second;
+      second = topR[x];
+      secondRacer = x;
+    } else if (topR[x] > third) {
+      third = topR[x];
+      thirdRacer = x;
     }
     console.log(`${firstRacer} : ${first} \n ${secondRacer} : ${second} \n ${thirdRacer} : ${third}`);
   };

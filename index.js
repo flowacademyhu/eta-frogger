@@ -1,7 +1,9 @@
 let table = require('table');
 let term = require('terminal-kit').terminal;
 let ctx = require('axel');
-
+let colors = require('colors');
+let readLine = require('readline-sync');
+let chalk = require('chalk');
 
 const matrixGenerator = (row, col, filler) => {
   let matrix = [];
@@ -14,14 +16,7 @@ const matrixGenerator = (row, col, filler) => {
   return matrix;
 };
 
-let map = matrixGenerator(23, 41, 0);
-
-const frogMatrixStarter = (matrix, row, col) => {
-  const matr = matrix.slice();
-  matr[row][col] = 1;
-  return matr;
-};
-
+let map = matrixGenerator(20, 41, 0);
 
 const frogCoordinator = (row, col) => {
   const cord = {
@@ -31,10 +26,17 @@ const frogCoordinator = (row, col) => {
   return cord;
 };
 
+const finishMaker = (matrix) => {
+  matrix[0][8] = 'F';
+  matrix[0][16] = 'L';
+  matrix[0][24] = 'O';
+  matrix[0][32] = 'W';
+  return matrix;
+};
 
-const cord = frogCoordinator(22, 20);
+map = finishMaker(map);
+const cord = frogCoordinator(18, 20);
 
-let a = 0;
 const frogLeft = () => {
   cord.col--;
 };
@@ -47,15 +49,7 @@ const frogUp = () => {
 const frogDown = () => {
   cord.row++;
 };
-const finishLine = () => {
-  if (
-    (cord.row == 2 && cord.col == 6) ||
-(cord.row == 2 && cord.col == 10) || 
-(cord.row == 2 && cord.col == 14) ||
-(cord.row == 2 && cord.col == 18)) {
-    return true;
-  }
-};
+
 const westBorder = () => {
   if (cord.col > 4) return true;
 };
@@ -63,13 +57,20 @@ const eastBorder = () => {
   if (cord.col < 36) return true;
 };
 const southBorder = () => {
-  if (cord.row < 22) return true;
+  if (cord.row < 19) return true;
 };
 const northBorder = () => {
-  if (cord.row > 2) return true;
+  if (cord.row > 1 ||
+  (cord.row === 1 && cord.col === 8) ||
+  (cord.row === 1 && cord.col === 16) || 
+  (cord.row === 1 && cord.col === 24) ||
+  (cord.row === 1 && cord.col === 32)) {
+    return true;
+  } 
 };
+
 // A frogMove bekéri billenytűket a felhasználótól és modsítja a béka helyét a mátrixban.
-const frogMove = () => {
+const main = () => {
   const stdin = process.stdin;
   stdin.setRawMode(true);
   stdin.resume();
@@ -80,25 +81,21 @@ const frogMove = () => {
       frogLeft();
       console.clear();
       console.log(layer(map));
-      console.log(cord.row, cord.col);
     }
     if (key === 'd' && eastBorder()) {
       frogRight();
       console.clear();
       console.log(layer(map));
-      console.log(cord.row, cord.col);
     }
-    if (key === 'w' && (northBorder() || finishLine())) {
+    if (key === 'w' && (northBorder())) {
       frogUp();
       console.clear();
       console.log(layer(map));
-      console.log(cord.row, cord.col);
     }
     if (key === 's' && southBorder()) {
       frogDown();
       console.clear();
       console.log(layer(map));
-      console.log(cord.row, cord.col);
     }
     if (key === 'q') {
       process.exit();
@@ -111,17 +108,15 @@ const car1 = [7, 7, 7];
 const car2 = [6, 6, 6];
 const car3 = [5, 5];
 
-// fa
 const treeLog1 = [4, 4, 4, 4, 4];
-const treeLog2 = [3, 3, 3];
-const treeLog3 = [2, 2];
-
-// út
-const road = [0, 0, 0, 0];
+const treeLog2 = [2, 2, 2];
+const treeLog3 = [3, 3];
 
 const move = (array, vehicle, direction, newTick) => {
   if (direction > 0) {
     if (newTick % 8 === 0) {
+     array.pop();
+     array.unshift(0);
       for (let i = 0; i < vehicle.length; i++) {
         array[i] = vehicle[i];
       }
@@ -133,9 +128,12 @@ const move = (array, vehicle, direction, newTick) => {
 
   if (direction < 0) {
     if (newTick % 8 === 0) {
+     array.shift();
+     array.push(0);
       for (let i = vehicle.length; i > 0; i--) {
         array[array.length - 1] = vehicle[vehicle.length - 1];
         array[array.length - 2] = vehicle[vehicle.length - 2];
+        array[array.length - 3] = vehicle[vehicle.length - 3];
       }
     } else {
       array.shift();
@@ -147,81 +145,115 @@ const move = (array, vehicle, direction, newTick) => {
 
 const layer = (matr) => {
   let character = '';
-  for (let row = 1; row < matr.length; row++) {
+  for (let row = 0; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
-      if (row === cord.row && col === cord.col) {
-        character += '\x1b[32m@\x1b[0m';
+      if (row === cord.row && col === cord.col && matr[row][col] !== 'F' && matr[row][col] !== 'L' && matr[row][col] !== 'O' && matr[row][col] !== 'W' ) {
+        character += chalk.hex('#20620B').bgBlack.bold('@');
+      } else if (row === cord.row && col === cord.col && matr[row][col] === 'F') {
+        character += 'F'.green.bgGray;
+      } else if (row === cord.row && col === cord.col && matr[row][col] === 'L') {
+        character += 'L'.green.bgGray;
+      } else if (row === cord.row && col === cord.col && matr[row][col] === 'O') {
+        character += 'O'.green.bgGray;
+      } else if (row === cord.row && col === cord.col && matr[row][col] === 'W') {
+        character += 'W'.green.bgGray;
       } else if (matr[row][col] === 0) {
-        character += '░';
+        character += ' '.bgGrey;
+      } else if (matr[row][col] === 'F') {
+        character += 'F'.yellow.bgGray;
+      } else if (matr[row][col] === 'L') {
+        character += 'L'.yellow.bgGray; 
+      } else if (matr[row][col] === 'O') {
+        character += 'O'.yellow.bgGray; 
+      } else if (matr[row][col] === 'W') {
+        character += 'W'.yellow.bgGray; 
       } else if (matr[row][col] === 7) {
-        character += 'c'; 
+        character += chalk.yellow.bgRed.bold('¤');
       } else if (matr[row][col] === 6) {
-        character += 'c'; 
+        character += chalk.yellow.bgBlue.bold('¤');
       } else if (matr[row][col] === 5) {
-        character += 'c'; 
+        character += chalk.yellow.bgGreen.bold('¤');
       } else if (matr[row][col] === 4) {
-        character += 'w'; 
+        character += chalk.rgb(205,133,63).bgHex('#FFE5CC').bold('W');
       } else if (matr[row][col] === 3) {
-        character += 'o';
+        character += chalk.hex('#20620B').bgWhite.bold('O');
       } else if (matr[row][col] === 2) {
-        character += 'o';
+        character += chalk.hex('#20620B').bgWhite.bold('O');
       }
     }
     character += '\n';
   }
   return character;
 };
+
 const check = (matr) => {
   for (let row = 1; row < matr.length; row++) {
     for (let col = 4; col < matr[row].length; col++) {
-  if(matr[row][col] === 0 && row === cord.row && col === cord.col){
-    //halál
-  }    
-  if ((matr[row][col] === 9 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 7 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 6 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 5 && row === cord.row && col === cord.col)) {
-       console.log('halál');
-  }
-
-  if ((matr[row][col] === 4 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 3 && row === cord.row && col === cord.col) ||
-      (matr[row][col] === 2 && row === cord.row && col === cord.col)) {
-      console.log('élet');
-  }
- 
-  
-    }   
+      if (
+        (matr[row][col] === 'F' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 'L' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 'O' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 'W' && row === cord.row && col === cord.col ) ||
+        (matr[row][col] === 7 && row === cord.row && col === cord.col) ||
+        (matr[row][col] === 6 && row === cord.row && col === cord.col) ||
+        (matr[row][col] === 5 && row === cord.row && col === cord.col)) {
+        console.log('halál');
+        process.exit();
+      }
+      if (matr[row][col] === 0 && row === cord.row && col === cord.col && row < 9) {
+        console.log(cord.row, cord.col);
+        cord.col += 1;
+        break;
+      }
+      if (matr[row][col] === 4 && row === cord.row && col === cord.col) {
+        console.log(cord.row, cord.col);
+        cord.col += 1;
+        break;
+      }
+      if (matr[row][col] === 3 && row === cord.row && col === cord.col) {
+        console.log(cord.row, cord.col);
+        cord.col -= 1;
+        break;
+      }
+      if (matr[row][col] === 2 && row === cord.row && col === cord.col) {
+        console.log(cord.row, cord.col);
+        cord.col -= 1;
+        break;
+      }
+      if (matr[row][col] === 8 && row === cord.row && col === cord.col) {
+        console.log(cord.row, cord.col);
+        cord.col += 1;
+        break;
+      }
+    }
   }
 };
- 
 
 let tick = 4;
-// move(map[1], car1, -1);
+check(map);
+
+main();
 setInterval(() => {
   console.clear();
-  move(map[2], treeLog3, -1, tick);
-  move(map[3], treeLog2, 1, tick);
-  move(map[4], treeLog3, -1, tick);
-  move(map[5], treeLog1, 1, tick);
-  move(map[6], treeLog3, -1, tick);
-  move(map[7], treeLog2, 1, tick);
-  move(map[8], treeLog3, -1, tick);
-  move(map[9], treeLog3, -1, tick);
+  move(map[1], treeLog2, -1, tick);
+  move(map[2], treeLog1, 1, tick);
+  move(map[3], treeLog2, -1, tick);
+  move(map[4], treeLog1, 1, tick);
+  move(map[5], treeLog2, -1, tick);
+  move(map[6], treeLog1, 1, tick);
+  move(map[7], treeLog2, -1, tick);
+  move(map[8], treeLog2, -1, tick);
 
-  move(map[11], car1, 1, tick);
+  move(map[10], car1, 1, tick);
+  move(map[11], car2, -1, tick);
   move(map[12], car2, -1, tick);
-  move(map[13], car2, -1, tick);
-  move(map[14], car2, 1, tick);
-  move(map[15], car2, -1, tick);
-  move(map[16], car3, 1, tick);
-  move(map[17], car3, -1, tick);
-  move(map[18], car3, 1, tick);
+  move(map[13], car3, 1, tick);
+  move(map[14], car2, -1, tick);
+  move(map[15], car2, 1, tick);
+  move(map[16], car2, -1, tick);
+  move(map[17], car3, 1, tick);
 
   console.log(layer(map));
   check(map);
   tick += 1;
-  
-}, 300);
-
-frogMove();
+}, 200);
