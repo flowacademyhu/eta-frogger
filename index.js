@@ -25,7 +25,7 @@ const mainMenu = () => {
     if (label === ('NEW GAME')) {
       console.log('START');
     } else if (label === ('TOP SCORES')) {
-      console.clear();
+      term.clear();
       elements.topScorers();
       const key = readLine.keyIn('\n');
       if (key === 'q' || key === 'Q') {
@@ -34,7 +34,7 @@ const mainMenu = () => {
 
       }
     } else if (label === ('HELP')) {
-      console.clear();
+      term.clear();
       elements.help();
       const key = readLine.keyIn('\n');
       if (key === 'q' || key === 'Q') {
