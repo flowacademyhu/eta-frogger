@@ -45,7 +45,6 @@ const topScorers = () => {
   console.log(`  Press "p" if you want to start the game and "q" if you want to quit.`);
 };
 
-
 const help = () => {
   term.red();
   console.log('        ___           _                   _   _   ');
@@ -68,6 +67,35 @@ const help = () => {
   term.yellow();
   console.log(`  Press "p" if you want to start the game and "q" if you want to quit.`);
 };
+
+const gameOver = () => {
+  term.red();
+  console.log('       ____                         ___');
+  console.log('      / ___| __ _ _ __ ___   ___   / _ \\__   _____ _ __');
+  console.log('     | |  _ / _` | \'_ ` _ \\ / _ \\ | | | \\ \\ / / _ \\ \'__|');
+  console.log('     | |_| | \(_| | | | | | |  __/ | |_| |\\ V /  __/ |  ');
+  console.log('      \\____|\\__,_|_| |_| |_|\\___|  \\___/  \\_/ \\___|_|  ');
+  console.log('\n');
+  term.green();
+  console.log('                      ___      ___ ');
+  console.log('                     /___\\----/___\\ ');
+  console.log('                    |  X  |  |  X  | ');
+  console.log('                    /\\___/    \\___/\\ ');
+  console.log('                  -|      o  o      |-');
+  console.log('                 /  \\______________/  \\ ');
+  console.log('                 \\ \\ |   |    |   | / / ');
+  console.log('                  ww ooooo----ooooo ww ');
+  console.log('\n');
+  term.white();
+  let quote = ('           \"Theories pass. The frog remains.\" ');
+  let quoteOf = ('                                                     - Jean Rostand -');
+  term.bold(quote);
+  console.log(quoteOf);
+  console.log('\n');
+  term.yellow();
+  console.log(`  Press "p" if you want to start the game and "q" if you want to quit.`);
+};
+gameOver();
 
 module.exports = {
   mainMenuTitle: mainMenuTitle,
