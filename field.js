@@ -118,25 +118,25 @@ const layer = (matr, obj, f, l, o, w, int, point, life) => {
       if (row === obj.row && col === obj.col && matr[row][col] !== 'F' && matr[row][col] !== 'L' && matr[row][col] !== 'O' && matr[row][col] !== 'W') character += chalk.hex('#20620B').bgBlack.bold('@');
       else if (matr[row][col] === 0 && row < 9) character += ' '.bgBlue;
       else if (matr[row][col] === 0) character += ' '.bgGrey;
-      else if (matr[row][col] === 'F' && row === 19) character += 'F'.green.bgGray;
-      else if (matr[row][col] === 'F' && f) character += 'F'.yellow.bgBlack;
-      else if (matr[row][col] === 'L' && row === 19) character += 'L'.green.bgGray;
-      else if (matr[row][col] === 'L' && l) character += 'L'.yellow.bgBlack;
-      else if (matr[row][col] === 'O' && row === 19) character += 'O'.green.bgGray;
-      else if (matr[row][col] === 'O' && o) character += 'O'.yellow.bgBlack;
-      else if (matr[row][col] === 'W' && w) character += 'W'.yellow.bgBlack;
-      else if (matr[row][col] === 'F' && !f) character += 'F'.green.bgGray;
-      else if (matr[row][col] === 'L' && !l) character += 'L'.green.bgGray;
-      else if (matr[row][col] === 'O' && !o) character += 'O'.green.bgGray;
-      else if (matr[row][col] === 'W' && !w) character += 'W'.green.bgGray;
-      else if (matr[row][col] === 'T') character += 'T'.green.bgGray;
-      else if (matr[row][col] === 'I') character += 'I'.green.bgGray;
-      else if (matr[row][col] === 'M') character += 'M'.green.bgGray;
-      else if (matr[row][col] === 'E') character += 'E'.green.bgGray;
-      else if (matr[row][col] === ':') character += ':'.green.bgGray;
-      else if (matr[row][col] === 'P') character += 'P'.green.bgGray;
-      else if (matr[row][col] === 'N') character += 'N'.green.bgGray;
-      else if (matr[row][col] === 'S') character += 'S'.green.bgGray;
+      else if (matr[row][col] === 'F' && row === 19) character += 'F'.green.bgBlack;
+      else if (matr[row][col] === 'F' && f) character += 'F'.yellow.bold;
+      else if (matr[row][col] === 'L' && row === 19) character += 'L'.green.bgBlack;
+      else if (matr[row][col] === 'L' && l) character += 'L'.yellow.bgBlack.bold;
+      else if (matr[row][col] === 'O' && row === 19) character += 'O'.green.bgBlack;
+      else if (matr[row][col] === 'O' && o) character += 'O'.yellow.bgBlack.bold;
+      else if (matr[row][col] === 'W' && w) character += 'W'.yellow.bgBlack.bold;
+      else if (matr[row][col] === 'F' && !f) character += 'F'.red.bgGreen.bold;
+      else if (matr[row][col] === 'L' && !l) character += 'L'.red.bgGreen.bold;
+      else if (matr[row][col] === 'O' && !o) character += 'O'.red.bgGreen.bold;
+      else if (matr[row][col] === 'W' && !w) character += 'W'.red.bgGreen.bold;
+      else if (matr[row][col] === 'T') character += 'T'.green.bgBlack;
+      else if (matr[row][col] === 'I') character += 'I'.green.bgBlack;
+      else if (matr[row][col] === 'M') character += 'M'.green.bgBlack;
+      else if (matr[row][col] === 'E') character += 'E'.green.bgBlack;
+      else if (matr[row][col] === ':') character += ':'.green.bgBlack;
+      else if (matr[row][col] === 'P') character += 'P'.green.bgBlack;
+      else if (matr[row][col] === 'N') character += 'N'.green.bgBlack;
+      else if (matr[row][col] === 'S') character += 'S'.green.bgBlack;
       else if (matr[row][col] === 7) character += chalk.yellow.bgRed.bold('¤');
       else if (matr[row][col] === 6) character += chalk.yellow.bgBlue.bold('¤');
       else if (matr[row][col] === 5) character += chalk.yellow.bgGreen.bold('¤');
@@ -144,27 +144,27 @@ const layer = (matr, obj, f, l, o, w, int, point, life) => {
       else if (matr[row][col] === 8) character += chalk.rgb(205, 133, 63).bgHex('#FFE5CC').bold('W');
       else if (matr[row][col] === 2) character += chalk.hex('#20620B').bgWhite.bold('O');
       if (int.toString().length > 1) {
-        if (row === 19 && col === 11) character += (int.toString()[0]).green.bgGray;
-        else if (row === 19 && col === 12) character += (int.toString()[1]).green.bgGray;
+        if (row === 19 && col === 11) character += (int.toString()[0]).red.bgBlack;
+        else if (row === 19 && col === 12) character += (int.toString()[1]).red.bgBlack;
       } else if (int.toString().length <= 1) {
-        if (row === 19 && col === 11) character += '0'.green.bgGray;
-        else if (row === 19 && col === 12) character += (int.toString()[0]).green.bgGray;
+        if (row === 19 && col === 11) character += '0'.red.bgBlack;
+        else if (row === 19 && col === 12) character += (int.toString()[0]).red.bgBlack;
       } if (point.toString().length > 3) {
-        if (row === 19 && col === 22) character += (point.toString()[0]).green.bgGray;
-        else if (row === 19 && col === 23) character += (point.toString()[1]).green.bgGray;
-        else if (row === 19 && col === 24) character += (point.toString()[2]).green.bgGray;
-        else if (row === 19 && col === 25) character += (point.toString()[3]).green.bgGray;
+        if (row === 19 && col === 22) character += (point.toString()[0]).red.bgBlack;
+        else if (row === 19 && col === 23) character += (point.toString()[1]).red.bgBlack;
+        else if (row === 19 && col === 24) character += (point.toString()[2]).red.bgBlack;
+        else if (row === 19 && col === 25) character += (point.toString()[3]).red.bgBlack;
       } else if (point.toString().length > 2) {
-        if (row === 19 && col === 22) character += '0'.green.bgGray;
-        else if (row === 19 && col === 23) character += (point.toString()[0]).green.bgGray;
-        else if (row === 19 && col === 24) character += (point.toString()[1]).green.bgGray;
-        else if (row === 19 && col === 25) character += (point.toString()[2]).green.bgGray;
+        if (row === 19 && col === 22) character += '0'.red.bgBlack;
+        else if (row === 19 && col === 23) character += (point.toString()[0]).red.bgBlack;
+        else if (row === 19 && col === 24) character += (point.toString()[1]).red.bgBlack;
+        else if (row === 19 && col === 25) character += (point.toString()[2]).red.bgBlack;
       } else if (point.toString().length > 1) {
-        if (row === 19 && col === 22) character += '0'.green.bgGray;
-        else if (row === 19 && col === 23) character += '0'.green.bgGray;
-        else if (row === 19 && col === 24) character += (point.toString()[0]).green.bgGray;
-        else if (row === 19 && col === 25) character += (point.toString()[1]).green.bgGray;
-      } if (row === 19 && col === 33) character += (life.toString()[0]).green.bgGray;
+        if (row === 19 && col === 22) character += '0'.red.bgBlack;
+        else if (row === 19 && col === 23) character += '0'.red.bgBlack;
+        else if (row === 19 && col === 24) character += (point.toString()[0]).red.bgBlack;
+        else if (row === 19 && col === 25) character += (point.toString()[1]).red.bgBlack;
+      } if (row === 19 && col === 33) character += (life.toString()[0]).red.bgBlack;
     }
     character += '\n';
   }

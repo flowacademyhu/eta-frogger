@@ -8,7 +8,7 @@ const field = require('./field.js');
 const fs = require('fs');
 const topScores = require('./topScores.js');
 const result1 = require('./result.json');
-
+const fakeLoad = require('./fakeload.js');
 
 const game = () => {
   let map = field.matrixGenerator(20, 41, 0);
@@ -21,7 +21,7 @@ const game = () => {
   let oCheck = true;
   let wCheck = true;
   let timeTick = 0;
-  let timeStartAt = 45;
+  let timeStartAt = 54;
   let tick = 4;
 
   let userName = readLine.question('Please give me your username: ');
@@ -67,9 +67,9 @@ const game = () => {
     console.clear();
   };
 
-  const car1 = [7, 7, 7];
-  const car2 = [6, 6, 6];
-  const car3 = [5, 5];
+  const car1 = [7, 7, 7, 7];
+  const car2 = [6, 6, 6, 6];
+  const car3 = [5, 5, 5];
 
   const treeLog1 = [4, 4, 4, 4, 4];
   const treeLog2 = [2, 2, 2, 2, 2];
@@ -165,7 +165,7 @@ const game = () => {
 
   setInterval(() => {
     check(map, cord, timeStartAt);
-
+    fakeLoad.fakeLoad();
     console.clear();
     field.move(map[1], treeLog2, -1, tick, 8, tick / 1);
     field.move(map[2], treeLog1, 1, tick, 17, tick / 4);
@@ -176,7 +176,7 @@ const game = () => {
     field.move(map[7], treeLog2, -1, tick, 9, tick / 4);
     field.move(map[8], treeLog2, -1, tick, 9, tick / 4);
 
-    field.move(map[10], car1, 1, tick, 25, 0.2);
+    field.move(map[10], car1, 1, tick, 25, 0.25);
     field.move(map[11], car2, -1, tick, 15, 2);
     field.move(map[12], car2, -1, tick, 8, 3);
     field.move(map[13], car3, 1, tick, 11, 3);
@@ -189,11 +189,11 @@ const game = () => {
     timer(timeTick);
     field.arcadeTime(map, timeStartAt);
     field.arcadePoints(map, points);
-    field.arcadeLife(map, life); 
+    field.arcadeLife(map, life);
     finishChecker(cord);
     timeTick += 1;
     tick += 1;
-  }, 200);
+  }, 150);
 };
 
 module.exports = {
