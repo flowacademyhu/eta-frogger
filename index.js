@@ -36,7 +36,7 @@ const mainMenu = () => {
       elements.topScorers();
       const key = readLine.keyIn('\n');
       if (key === 'x' || key === 'X') {
-        menu.reset();
+        process.exit();
       } else if (key === 'p' || key === 'P') {
         term.reset();
         game.game();
@@ -46,7 +46,7 @@ const mainMenu = () => {
       elements.help();
       const key = readLine.keyIn('\n');
       if (key === 'x' || key === 'X') {
-        menu.reset();
+        process.exit();
       } else if (key === 'p' || key === 'P') {
         term.reset();
         game.game();

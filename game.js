@@ -24,7 +24,8 @@ const game = () => {
   let timeStartAt = 53;
   let tick = 4;
 
-  let userName = readLine.question('Please give me your username: '.white);
+  let userName = readLine.question('Please give me your username: ');
+  
   let player = new mpg.MpgPlayer();
   player.play('./zene.mp3');
 
@@ -63,7 +64,7 @@ const game = () => {
         let jsonBoard = JSON.stringify(result);
         fs.writeFileSync('result.json', jsonBoard);
         term.reset();
-        process.exit(); 
+        process.exit();
       }
     }
     console.clear();
@@ -95,23 +96,28 @@ const game = () => {
     timeStartAt = 45;
   };
 
+  const reset3 = () => {
+    points = 0;
+    reset2();
+  };
+
   const finishChecker = (obj) => {
     if (!fCheck && !lCheck && !oCheck && !wCheck) {
       reset2();
     } else if (obj.row === 0 && obj.col === 8 && fCheck) {
-      points += 50;
+      points += 50 + timeStartAt;
       fCheck = false;
       reset();
     } else if (obj.row === 0 && obj.col === 16 && lCheck) {
-      points += 50;
+      points += 50 + timeStartAt;
       lCheck = false;
       reset();
     } else if (obj.row === 0 && obj.col === 24 && oCheck) {
-      points += 50;
+      points += 50 + timeStartAt;
       oCheck = false;
       reset();
     } else if (obj.row === 0 && obj.col === 32 && wCheck) {
-      points += 50;
+      points += 50 + timeStartAt;
       wCheck = false;
       reset();
     }
@@ -126,10 +132,10 @@ const game = () => {
           console.clear();
         } else if (
           (matr[row][col] === 7 && row === obj.row && col === obj.col) ||
-        (matr[row][col] === 6 && row === obj.row && col === obj.col) ||
-        (matr[row][col] === 5 && row === obj.row && col === obj.col) ||
-        (field.westBorder(cord) === false) ||
-        (field.eastBorder(cord) === false)) {
+          (matr[row][col] === 6 && row === obj.row && col === obj.col) ||
+          (matr[row][col] === 5 && row === obj.row && col === obj.col) ||
+          (field.westBorder(cord) === false) ||
+          (field.eastBorder(cord) === false)) {
           life -= 1;
           reset();
         }
@@ -143,7 +149,7 @@ const game = () => {
           if (key === 'x' || key === 'X') {
             process.exit();
           } else if (key === 'p' || key === 'P') {
-            reset2();
+            reset3();
             field.standardInput();
           }
         }

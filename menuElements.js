@@ -62,7 +62,7 @@ const help = () => {
   console.log('                   \\`        `-\\         /-\'        \'/');
   console.log('                    `                               \'');
   term.white();
-  console.log('  In this game you have 4 frogs. To finish a level you have to lead all of them' + ('\n') + '  towards the end points. End points are marked with the "F", "L", "O" and "W"' + ('\n') + '  letters. Use the "W" key to move up, "S" to move down, "A" to move left and' + ('\n') + '  "D" to move right. You have 60 seconds to finish the task and the goal is' + ('\n') + '  to be as quick as possible. Don\'t let cars to hit you on the road and avoid' + ('\n') + '  drowning in the river by using the tree logs when crossing it.');
+  console.log('  In this game you have 4 frogs. To finish a level you have to lead all of them' + ('\n') + '  towards the end points. End points are marked with the "F", "L", "O" and "W"' + ('\n') + '  letters. Use the "W" key to move up, "S" to move down, "A" to move left and' + ('\n') + '  "D" to move right. You have 45 seconds to finish the task and the goal is' + ('\n') + '  to be as quick as possible. Don\'t let cars to hit you on the road and avoid' + ('\n') + '  drowning in the river by using the tree logs when crossing it.');
   console.log('\n');
   term.yellow();
   console.log(`  Press "p" if you want to start the game and "x" if you want to quit.`);
