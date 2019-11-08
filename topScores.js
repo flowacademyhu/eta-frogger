@@ -54,7 +54,7 @@ const statGen = () => {
       thirdRacer = x;
     }
   }
-  console.log(`${firstRacer} : ${first} \n ${secondRacer} : ${second} \n ${thirdRacer} : ${third}`);
+  console.log(`\n ${firstRacer} : ${first} \n ${secondRacer} : ${second} \n ${thirdRacer} : ${third}`);
 };
 
 module.exports = {

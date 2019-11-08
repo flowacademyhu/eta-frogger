@@ -1,6 +1,4 @@
-const table = require('table');
 const term = require('terminal-kit').terminal;
-const ctx = require('axel');
 const colors = require('colors');
 const readLine = require('readline-sync');
 const chalk = require('chalk');
