@@ -10,6 +10,7 @@ const fakeLoad = require('./fakeload.js');
 const mpg = require('mpg123');
 const elements = require('./menuElements.js');
 
+
 const game = () => {
   let map = field.matrixGenerator(20, 41, 0);
   map = field.finishMaker(map);
@@ -25,7 +26,7 @@ const game = () => {
   let tick = 4;
 
   let userName = readLine.question('Please give me your username: ');
-  
+
   let player = new mpg.MpgPlayer();
   player.play('./zene.mp3');
 
@@ -130,7 +131,7 @@ const game = () => {
           life -= 1;
           reset();
           console.clear();
-        } else if (
+        } if (
           (matr[row][col] === 7 && row === obj.row && col === obj.col) ||
           (matr[row][col] === 6 && row === obj.row && col === obj.col) ||
           (matr[row][col] === 5 && row === obj.row && col === obj.col) ||
@@ -142,22 +143,6 @@ const game = () => {
         if (matr[row][col] === 4 && row === obj.row && col === obj.col) {
           obj.col += 1;
           break;
-        }
-        if (life === 0) {
-          elements.gameOver();
-          const key = readLine.keyIn('\n');
-          if (key === 'x' || key === 'X') {
-            process.exit();
-          } else if (key === 'p' || key === 'P') {
-            reset3();
-            field.standardInput();
-          }
-        }
-        if (time === 0) {
-          console.clear();
-          console.log('Time is up');
-          life -= 1;
-          reset();
         }
         if (matr[row][col] === 2 && row === obj.row && col === obj.col) {
           obj.col -= 1;
@@ -177,7 +162,26 @@ const game = () => {
     }
   };
 
+  const lifeCheck = () => {
+    if (life === 0) {
+      elements.gameOver();
+      const key = readLine.keyIn('\n');
+      if (key === 'x' || key === 'X') {
+        process.exit();
+      } else if (key === 'p' || key === 'P') {
+        reset3();
+        field.standardInput();
+      }
+    }
+  };
 
+  const timeCheck = () => {
+    if (timeStartAt === 0) {
+      console.clear();
+      life -= 1;
+      reset();
+    }
+  };
 
   setInterval(() => {
     check(map, cord, timeStartAt);
@@ -203,6 +207,8 @@ const game = () => {
 
     console.log(field.layer(map, cord, fCheck, lCheck, oCheck, wCheck, timeStartAt, points, life));
     timer(timeTick);
+    lifeCheck();
+    timeCheck();
     field.arcadeTime(map, timeStartAt);
     field.arcadePoints(map, points);
     field.arcadeLife(map, life);

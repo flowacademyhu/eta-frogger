@@ -1,9 +1,7 @@
 const chalk = require('chalk');
 const colors = require('colors');
-const readLine = require('readline');
-const test = require('./game.js');
-
-const cord = test.cord;
+const readLine = require('readline-sync');
+const elements = require('./menuElements.js');
 
 const matrixGenerator = (row, col, filler) => {
   const matrix = [];
@@ -164,7 +162,13 @@ const layer = (matr, obj, f, l, o, w, int, point, life) => {
         else if (row === 19 && col === 23) character += '0'.red.bgBlack;
         else if (row === 19 && col === 24) character += (point.toString()[0]).red.bgBlack;
         else if (row === 19 && col === 25) character += (point.toString()[1]).red.bgBlack;
-      } if (row === 19 && col === 33) character += (life.toString()[0]).red.bgBlack;
+      } else if (point === 0) {
+        if (row === 19 && col === 22) character += '0'.red.bgBlack;
+        else if (row === 19 && col === 23) character += '0'.red.bgBlack;
+        else if (row === 19 && col === 24) character += '0'.red.bgBlack;
+        else if (row === 19 && col === 25) character += '0'.red.bgBlack;
+      }
+      if (row === 19 && col === 33) character += (life.toString()[0]).red.bgBlack;
     }
     character += '\n';
   }
@@ -199,6 +203,11 @@ const arcadePoints = (matrix, int) => {
     matrix[19][23] = stringPoint[1];
     matrix[19][24] = stringPoint[2];
     matrix[19][25] = stringPoint[3];
+  } else {
+    matrix[19][22] = '0';
+    matrix[19][23] = '0';
+    matrix[19][24] = '0';
+    matrix[19][25] = '0';
   }
   return stringPoint;
 };
