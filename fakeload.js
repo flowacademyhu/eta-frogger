@@ -3,55 +3,43 @@ const colors = require('colors');
 let time = 0;
 const term = require('terminal-kit').terminal;
 
+const spacing = () => {
+  for (let i = 0; i < 8; i++) {
+    console.log('');
+  }
+};
+
 const fakeLoad = () => {
   if (time <= 300.00) {
     term.clear();
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+    spacing();
+
     console.log('             loading...'.green);
     console.log('          ¤'.green);
     time += 1;
   }
   if (time > 300.00 && time <= 800) {
     term.clear();
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+
+    spacing();
+
     console.log('             loading...'.green);
     console.log('          ¤¤¤'.green);
     time += 1;
   }
   if (time > 800.00 && time <= 1000.00) {
     term.clear();
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+
+    spacing();
+
     console.log('             loading...'.green);
     console.log('          ¤¤¤¤¤'.green);
     time += 1;
   }
   if (time > 1000.00 && time <= 1200.00) {
     term.clear();
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+
+    spacing();
 
     console.log('             loading...'.green);
     console.log('          ¤¤¤¤¤¤¤'.green);
@@ -59,39 +47,27 @@ const fakeLoad = () => {
   }
   if (time > 1200.00 && time <= 3000.00) {
     term.clear();
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+
+    spacing();
+
     console.log('             loading...'.green);
     console.log('          ¤¤¤¤¤¤¤¤¤'.green);
     time += 1;
   }
   if (time > 3000.00 && time <= 4000.00) {
     term.clear();
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+
+    spacing();
+
     console.log('             loading...'.green);
     console.log('          ¤¤¤¤¤¤¤¤¤¤¤¤'.green);
     time += 1;
   }
   if (time > 4000.00 && time <= 5000.00) {
     term.clear();
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+
+    spacing();
+
     console.log('             loading...'.green);
     console.log('          ¤¤¤¤¤¤¤¤¤¤¤¤¤'.green);
     time += 1;
@@ -99,13 +75,9 @@ const fakeLoad = () => {
   }
   if (time > 5000.00 && time <= 6000.00) {
     term.clear();
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+
+    spacing();
+
     console.log('             loading...'.green);
     console.log('          ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤'.green);
     time += 1;
@@ -113,13 +85,9 @@ const fakeLoad = () => {
   }
   if (time > 6000.00 && time <= 6500.00) {
     term.clear();
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+
+    spacing();
+
     console.log('             loading...'.green);
     console.log('          ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤'.green);
     time += 10;
